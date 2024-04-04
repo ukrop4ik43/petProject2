@@ -21,4 +21,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "Expence Checker"
 include(":app")
- 
+include(":data")
+include(":domain")
