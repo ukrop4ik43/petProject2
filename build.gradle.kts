@@ -2,14 +2,19 @@
 plugins {
     alias(libs.plugins.androidApplication) apply false
     alias(libs.plugins.jetbrainsKotlinAndroid) apply false
-    kotlin("kapt") version "1.9.23"
+    kotlin("kapt") version "1.9.0"
     alias(libs.plugins.androidLibrary) apply false
     alias(libs.plugins.jetbrainsKotlinJvm) apply false
 }
+
+
+
+
+
 buildscript {
 
     dependencies {
 
-        classpath ("com.google.dagger:hilt-android-gradle-plugin:2.47")
+        classpath ("com.google.dagger:hilt-android-gradle-plugin:2.50")
     }
 }

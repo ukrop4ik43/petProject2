@@ -69,6 +69,17 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
-    implementation ("com.google.dagger:hilt-android:2.47")
-    kapt ("com.google.dagger:hilt-android-compiler:2.47")
+    implementation ("androidx.navigation:navigation-compose:2.7.7")
+    implementation ("com.google.dagger:hilt-android:2.50")
+    kapt ("com.google.dagger:hilt-android-compiler:2.50")
+    implementation ("androidx.core:core-splashscreen:1.0.0-beta01")
+
+    // Navigation Compos
+
+    // Pager and Indicators - Accompanist
+    implementation ("com.google.accompanist:accompanist-pager:0.24.2-alpha")
+    implementation ("com.google.accompanist:accompanist-pager-indicators:0.24.2-alpha")
+
+    implementation( "androidx.hilt:hilt-navigation-compose:1.0.0-alpha02")
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
 }
