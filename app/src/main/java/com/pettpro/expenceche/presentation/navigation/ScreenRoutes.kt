@@ -1,4 +1,4 @@
-package com.pettpro.expenceche.presentration.navigation
+package com.pettpro.expenceche.presentation.navigation
 
 enum class Screen {
     HOME,

@@ -1,12 +1,9 @@
-package com.pettpro.expenceche.presentration.viewmodel
+package com.pettpro.expenceche.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.pettpro.domain.usecases.GetOnBoardingStateUseCase
 import com.pettpro.domain.usecases.SaveOnBoardingUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
