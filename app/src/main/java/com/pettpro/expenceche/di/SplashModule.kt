@@ -1,8 +1,6 @@
 package com.pettpro.expenceche.di
 
 import android.content.Context
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
 import com.pettpro.data.repository.splashstorage.SplashStorageImpl
 import com.pettpro.domain.splashstorage.SplashStorage
 import dagger.Module

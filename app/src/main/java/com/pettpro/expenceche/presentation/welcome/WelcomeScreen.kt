@@ -1,10 +1,12 @@
 package com.pettpro.expenceche.presentation.welcome
 
+import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -13,9 +15,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -25,16 +27,20 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.HorizontalPagerIndicator
 import com.google.accompanist.pager.PagerState
 import com.google.accompanist.pager.rememberPagerState
-import com.pettpro.expenceche.presentation.colors.Yellow200
+import com.pettpro.domain.db.model.User
 import com.pettpro.expenceche.presentation.colors.YellowCustom
+import com.pettpro.expenceche.presentation.colors.blackGradient
 import com.pettpro.expenceche.presentation.navigation.NavigationItem
-import com.pettpro.expenceche.presentation.viewmodel.SplashViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 
 @ExperimentalPagerApi
@@ -50,36 +56,53 @@ fun WelcomeScreen(
         OnBoardingPage.Third,
         OnBoardingPage.Fourth
     )
-    val pagerState = rememberPagerState()
-    if(splashViewModel.getOnBoardingState()){
-        navController.popBackStack()
-        navController.navigate(NavigationItem.Home.route)
-    }
-    Column(modifier = Modifier.fillMaxSize().background(Color.Black)) {
-        HorizontalPager(
-            modifier = Modifier.weight(10f),
-            count = 4,
-            state = pagerState,
-            verticalAlignment = Alignment.Top
-        ) { position ->
-            PagerScreen(onBoardingPage = pages[position])
+    LaunchedEffect(Unit) {
+        withContext(Dispatchers.IO){
+
         }
-        HorizontalPagerIndicator(
-            modifier = Modifier
-                .align(Alignment.CenterHorizontally)
-                .weight(1f),
-            pagerState = pagerState, activeColor = YellowCustom, inactiveColor = Color.Gray
-        )
-        FinishButton(
-            modifier = Modifier.weight(1f).background(Color.Black),
-            pagerState = pagerState
+    }
+    val pagerState = rememberPagerState()
+    if (splashViewModel.getOnBoardingState()) {
+        navController.popBackStack()
+        navController.navigate(NavigationItem.Login.route)
+    }
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(
+                brush = blackGradient
+            )
+    ) {
+        Column(
         ) {
-            splashViewModel.saveOnBoardingState(completed = true)
-            navController.popBackStack()
-            navController.navigate(NavigationItem.Home.route)
+            HorizontalPager(
+                modifier = Modifier.weight(10f),
+                count = 4,
+                state = pagerState,
+                verticalAlignment = Alignment.Top
+            ) { position ->
+                PagerScreen(onBoardingPage = pages[position])
+            }
+            HorizontalPagerIndicator(
+                modifier = Modifier
+                    .align(Alignment.CenterHorizontally)
+                    .weight(1f),
+                pagerState = pagerState, activeColor = YellowCustom, inactiveColor = Color.Gray
+            )
+            FinishButton(
+                modifier = Modifier
+                    .weight(1f)
+                    .background(Color.Transparent),
+                pagerState = pagerState
+            ) {
+                splashViewModel.saveOnBoardingState(completed = true)
+                navController.popBackStack()
+                navController.navigate(NavigationItem.Login.route)
+            }
         }
     }
 }
+
 @ExperimentalAnimationApi
 @ExperimentalPagerApi
 @Composable
@@ -116,11 +139,12 @@ fun FinishButton(
 fun PagerScreen(onBoardingPage: OnBoardingPage) {
     Column(
         modifier = Modifier
-            .fillMaxWidth().background(Color.Black),
+            .fillMaxWidth()
+            .background(Color.Transparent),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top,
 
-    ) {
+        ) {
         Image(
             modifier = Modifier
                 .fillMaxWidth(0.5f)

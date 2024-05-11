@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "635584791316",
+    "firebase_url": "https://expence-checker-default-rtdb.firebaseio.com",
+    "project_id": "expence-checker",
+    "storage_bucket": "expence-checker.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:635584791316:android:f30dcec769997a44d67801",
+        "android_client_info": {
+          "package_name": "com.pettpro.data"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAWPaC7AtPXDeIvsQEJKogFNp5-erfXC6Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

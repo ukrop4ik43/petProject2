@@ -1,4 +1,4 @@
-package com.pettpro.domain.usecases
+package com.pettpro.domain.usecases.onboarding
 
 import com.pettpro.domain.splashstorage.SplashStorage
 import kotlinx.coroutines.flow.Flow
