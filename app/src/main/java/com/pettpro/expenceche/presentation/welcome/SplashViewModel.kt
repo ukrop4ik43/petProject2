@@ -26,7 +26,7 @@ class SplashViewModel @Inject constructor(
     }
 
 
-    suspend fun getUser() :User {
+    fun getUser() :User {
        return userDatabaseUseCases.getUser()
     }
 

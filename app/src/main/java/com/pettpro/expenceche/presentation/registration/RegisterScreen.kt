@@ -34,7 +34,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.pettpro.expenceche.presentation.colors.YellowCustom
 import com.pettpro.expenceche.presentation.colors.blackGradient
-import com.pettpro.expenceche.presentation.colors.yellowGradient
+import com.pettpro.expenceche.presentation.colors.yellowBackgroundBrush
 import com.pettpro.expenceche.presentation.navigation.NavigationItem
 import com.pettpro.expenceche.presentation.registration.model.RegistrationFormEvent
 
@@ -48,12 +48,13 @@ fun RegisterScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(brush = yellowGradient)
+            .background(brush = yellowBackgroundBrush)
     ) {
         LaunchedEffect(key1 = context) {
             viewModel.validationEvents.collect { event ->
                 when (event) {
                     is RegisterViewModel.ValidationEvent.Success -> {
+                        viewModel.onEvent(RegistrationFormEvent.AddUser)
                         viewModel.onEvent(RegistrationFormEvent.ShowToast("Registration successful"))
                         navController?.navigate(NavigationItem.Login.route)
                     }
@@ -112,11 +113,7 @@ fun RegisterScreen(
                     unfocusedIndicatorColor = Color.Transparent
                 )
             )
-            if (state.nameError != null) {
-                viewModel.onEvent(RegistrationFormEvent.ShowToast(state.nameError))
 
-
-            }
             TextField(
                 modifier = Modifier
                     .padding(horizontal = 20.dp)
@@ -145,9 +142,7 @@ fun RegisterScreen(
                 )
             )
 
-            if (state.loginError != null) {
-                viewModel.onEvent(RegistrationFormEvent.ShowToast(state.loginError))
-            }
+
             TextField(
                 modifier = Modifier
                     .padding(horizontal = 20.dp)
@@ -176,7 +171,6 @@ fun RegisterScreen(
                 )
             )
 
-
             TextField(
                 modifier = Modifier
                     .padding(horizontal = 20.dp)
@@ -203,13 +197,20 @@ fun RegisterScreen(
                     focusedIndicatorColor = Color.Transparent,
                     unfocusedIndicatorColor = Color.Transparent
                 )
-
             )
-
-
-
-
             RegisterButton {
+                if (state.nameError != null) {
+                    viewModel.onEvent(RegistrationFormEvent.ShowToast(state.nameError))
+                }
+                if (state.loginError != null) {
+                    viewModel.onEvent(RegistrationFormEvent.ShowToast(state.loginError))
+                }
+                if (state.passwordError != null) {
+                    viewModel.onEvent(RegistrationFormEvent.ShowToast(state.passwordError))
+                }
+                if (state.secondPasswordError != null) {
+                    viewModel.onEvent(RegistrationFormEvent.ShowToast(state.secondPasswordError))
+                }
                 viewModel.onEvent(
                     RegistrationFormEvent.Sumbit
                 )

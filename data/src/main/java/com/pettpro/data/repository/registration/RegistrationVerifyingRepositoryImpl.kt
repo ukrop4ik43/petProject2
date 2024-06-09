@@ -1,11 +1,21 @@
 package com.pettpro.data.repository.registration
 
+import com.pettpro.domain.db.model.User
 import com.pettpro.domain.registration.RegistrationVerifyingRepository
 import com.pettpro.domain.registration.model.RegistrationValidationResults
 import javax.inject.Inject
 
 class RegistrationVerifyingRepositoryImpl @Inject constructor() : RegistrationVerifyingRepository {
-    override fun checkLogin(login: String): RegistrationValidationResults {
+    override fun checkLogin(
+        login: String,
+        users: MutableList<User>
+    ): RegistrationValidationResults {
+        if (loginExists(login, users)) {
+            return RegistrationValidationResults(
+                false,
+                "Account with such login exists"
+            )
+        }
         if (login.length < 8) {
             return RegistrationValidationResults(
                 false,
@@ -13,6 +23,15 @@ class RegistrationVerifyingRepositoryImpl @Inject constructor() : RegistrationVe
             )
         }
         return RegistrationValidationResults(true)
+    }
+
+    private fun loginExists(login: String, users: MutableList<User>): Boolean {
+        for (userData in users) {
+            if (userData.login == login) {
+                return true
+            }
+        }
+        return false
     }
 
     override fun checkPassword(password: String): RegistrationValidationResults {
@@ -39,7 +58,7 @@ class RegistrationVerifyingRepositoryImpl @Inject constructor() : RegistrationVe
     }
 
     override fun checkName(name: String): RegistrationValidationResults {
-        if(name.isEmpty()){
+        if (name.isEmpty()) {
             return RegistrationValidationResults(false, "Please enter name")
         }
         if (name[0].isLowerCase()) {

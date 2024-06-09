@@ -1,7 +1,6 @@
 package com.pettpro.expenceche.presentation.login
 
 import android.content.Context
-import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -16,15 +15,11 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.selection.TextSelectionColors
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -42,18 +37,30 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.pettpro.expenceche.presentation.colors.YellowCustom
 import com.pettpro.expenceche.presentation.colors.blackGradient
-import com.pettpro.expenceche.presentation.colors.yellowGradient
+import com.pettpro.expenceche.presentation.colors.yellowBackgroundBrush
+import com.pettpro.expenceche.presentation.login.model.LoginFormEvent
 import com.pettpro.expenceche.presentation.navigation.NavigationItem
 
 @Composable
 fun LoginScreen(navController: NavHostController?, viewModel: LoginViewModel = hiltViewModel()) {
 
     val context = LocalContext.current
+    val state = viewModel.state
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(brush = yellowGradient)
+            .background(brush = yellowBackgroundBrush)
     ) {
+        LaunchedEffect(key1 = context) {
+            viewModel.validationEvents.collect { event ->
+                when (event) {
+                    is LoginViewModel.ValidationEvent.Success -> {
+                        viewModel.onEvent(LoginFormEvent.ShowToast("Login successful"))
+                        navController?.navigate(NavigationItem.Home.route)
+                    }
+                }
+            }
+        }
         Text(
             modifier = Modifier
                 .fillMaxWidth()
@@ -86,7 +93,8 @@ fun LoginScreen(navController: NavHostController?, viewModel: LoginViewModel = h
                     .fillMaxWidth()
                     .height(70.dp)
                     .background(Color.DarkGray, shape = RoundedCornerShape(10.dp)),
-                value = viewModel.loginTextFieldState,
+                value = state.login,
+                isError = state.loginError != null,
                 textStyle = TextStyle.Default.copy(fontSize = 28.sp, textAlign = TextAlign.Start),
                 placeholder = {
                     Text(
@@ -98,13 +106,14 @@ fun LoginScreen(navController: NavHostController?, viewModel: LoginViewModel = h
                     )
                 },
                 onValueChange = {
-                    viewModel.loginTextFieldState = it
+                    viewModel.onEvent(LoginFormEvent.LoginChange(it))
                 }, colors = TextFieldDefaults.textFieldColors(
                     cursorColor = Color.Black,
                     focusedIndicatorColor = Transparent,
                     unfocusedIndicatorColor = Transparent
                 )
             )
+
             TextField(
                 modifier = Modifier
                     .padding(horizontal = 20.dp)
@@ -113,7 +122,8 @@ fun LoginScreen(navController: NavHostController?, viewModel: LoginViewModel = h
                     .fillMaxWidth()
                     .height(70.dp)
                     .background(Color.DarkGray, shape = RoundedCornerShape(10.dp)),
-                value = viewModel.passwordTextFieldState,
+                value = state.password,
+                isError = state.passwordError != null,
                 placeholder = {
                     Text(
                         "Password",
@@ -125,14 +135,26 @@ fun LoginScreen(navController: NavHostController?, viewModel: LoginViewModel = h
                 },
                 textStyle = TextStyle.Default.copy(fontSize = 28.sp, textAlign = TextAlign.Start),
                 onValueChange = {
-                    viewModel.passwordTextFieldState = it
+                    viewModel.onEvent(LoginFormEvent.PasswordChange(it))
                 }, colors = TextFieldDefaults.textFieldColors(
                     cursorColor = Color.Black,
                     focusedIndicatorColor = Transparent,
                     unfocusedIndicatorColor = Transparent
                 )
             )
-            LoginButton(context)
+
+            LoginButton(context) {
+
+                if (state.loginError != null) {
+                    viewModel.onEvent(LoginFormEvent.ShowToast(state.loginError))
+                }
+                if (state.passwordError != null) {
+                    viewModel.onEvent(LoginFormEvent.ShowToast(state.passwordError))
+                }
+                viewModel.onEvent(
+                    LoginFormEvent.Sumbit
+                )
+            }
         }
         Spacer(modifier = Modifier.weight(1f))
         LowerRow(navController)
@@ -142,7 +164,12 @@ fun LoginScreen(navController: NavHostController?, viewModel: LoginViewModel = h
 @Composable
 private fun LowerRow(navController: NavHostController?) {
 
-    Row(horizontalArrangement = Arrangement.Center, modifier = Modifier.fillMaxWidth().padding(bottom = 30.dp)) {
+    Row(
+        horizontalArrangement = Arrangement.Center,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(bottom = 30.dp)
+    ) {
         Text(
             modifier = Modifier
 
@@ -169,7 +196,7 @@ private fun LowerRow(navController: NavHostController?) {
 }
 
 @Composable
-private fun LoginButton(context: Context) {
+private fun LoginButton(context: Context, function: () -> Unit) {
     Text(
         modifier = Modifier
             .padding(horizontal = 20.dp)
@@ -180,9 +207,7 @@ private fun LoginButton(context: Context) {
             .background(YellowCustom, shape = RoundedCornerShape(10.dp))
             .wrapContentHeight()
             .clickable {
-                Toast
-                    .makeText(context, "s", Toast.LENGTH_SHORT)
-                    .show()
+                function.invoke()
             },
         text = "Login",
         textAlign = TextAlign.Center,

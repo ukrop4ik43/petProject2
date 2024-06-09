@@ -75,7 +75,9 @@ dependencies {
     implementation ("androidx.core:core-splashscreen:1.0.0-beta01")
 
     // Navigation Compos
-
+    implementation ("androidx.compose.material:material:1.0.5")
+    implementation ("androidx.compose.runtime:runtime-livedata:1.0.5")
+    implementation ("com.google.accompanist:accompanist-pager:0.20.3")
     // Pager and Indicators - Accompanist
     implementation ("com.google.accompanist:accompanist-pager:0.24.2-alpha")
     implementation ("com.google.accompanist:accompanist-pager-indicators:0.24.2-alpha")
@@ -88,5 +90,10 @@ dependencies {
     implementation ("androidx.room:room-ktx:2.6.1")
 
     implementation ("com.google.code.gson:gson:2.8.8")
+
+    implementation(platform("com.google.firebase:firebase-bom:32.5.0"))
+    implementation("com.google.firebase:firebase-analytics")
+    implementation("com.google.firebase:firebase-database")
+    implementation("com.google.android.gms:play-services-auth:21.0.0")
 
 }

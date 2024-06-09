@@ -31,9 +31,11 @@ class UserConvertor {
             "Grocery" -> CategoryOfExpence.Grocery
             "Electronic" -> CategoryOfExpence.Electronic
             "Healthcare" -> CategoryOfExpence.Healthcare
-            "Taxi" -> CategoryOfExpence.Taxi
+            "Transport" -> CategoryOfExpence.Transport
             "Restaurants" -> CategoryOfExpence.Restaurants
             "Entertainment" -> CategoryOfExpence.Entertainment
+
+            "Other" -> CategoryOfExpence.Other
             else -> null
         }
     }

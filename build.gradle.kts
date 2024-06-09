@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.jetbrainsKotlinAndroid) apply false
     kotlin("kapt") version "1.9.0"
     alias(libs.plugins.androidLibrary) apply false
+    id("com.google.gms.google-services") version "4.3.15" apply false
     alias(libs.plugins.jetbrainsKotlinJvm) apply false
 }
 

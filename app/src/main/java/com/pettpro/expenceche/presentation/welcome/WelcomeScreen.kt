@@ -50,22 +50,33 @@ fun WelcomeScreen(
     navController: NavHostController,
     splashViewModel: SplashViewModel = hiltViewModel()
 ) {
+    LaunchedEffect(Unit) {
+        launch(Dispatchers.IO) {
+            if (splashViewModel.getUser().login != "") {
+                withContext(Dispatchers.Main){
+                    navController.popBackStack()
+                    navController.navigate(NavigationItem.Home.route)
+                }
+
+            }
+            if (splashViewModel.getOnBoardingState()) {
+                withContext(Dispatchers.Main){
+                    navController.popBackStack()
+                    navController.navigate(NavigationItem.Login.route)
+                }
+            }
+        }
+
+    }
     val pages = listOf(
         OnBoardingPage.First,
         OnBoardingPage.Second,
         OnBoardingPage.Third,
         OnBoardingPage.Fourth
     )
-    LaunchedEffect(Unit) {
-        withContext(Dispatchers.IO){
 
-        }
-    }
     val pagerState = rememberPagerState()
-    if (splashViewModel.getOnBoardingState()) {
-        navController.popBackStack()
-        navController.navigate(NavigationItem.Login.route)
-    }
+
     Box(
         modifier = Modifier
             .fillMaxSize()
