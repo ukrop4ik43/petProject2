@@ -1,16 +1,11 @@
 package com.pettpro.expenceche.presentation.registration
 
 import android.annotation.SuppressLint
-import android.util.Log
-import android.widget.Toast
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.firebase.FirebaseApp
 import com.pettpro.domain.db.model.User
 import com.pettpro.domain.registration.FirebaseUsersRegistrationRepository
 import com.pettpro.domain.registration.RegistrationVerifyingRepository
@@ -18,18 +13,16 @@ import com.pettpro.domain.registration.ToastControl
 import com.pettpro.expenceche.presentation.registration.model.RegisterDataState
 import com.pettpro.expenceche.presentation.registration.model.RegistrationFormEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.async
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 @HiltViewModel
 class RegisterViewModel @Inject constructor(
     private val registrationVerifyingRepository: RegistrationVerifyingRepository,
     private val toastControl: ToastControl,
-    private val getAllUsersRepository: FirebaseUsersRegistrationRepository
+    private val firebaseUsersRepository: FirebaseUsersRegistrationRepository
 ) : ViewModel() {
     @SuppressLint("MutableCollectionMutableState")
     var userList: MutableList<User> = mutableListOf()
@@ -40,7 +33,7 @@ class RegisterViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            userList = getAllUsersRepository.getResponseFromRealtimeDatabaseUsingCoroutines()
+            userList = firebaseUsersRepository.getResponseFromRealtimeDatabaseUsingCoroutines()
         }
     }
 
@@ -70,7 +63,7 @@ class RegisterViewModel @Inject constructor(
             }
 
             is RegistrationFormEvent.AddUser -> {
-                getAllUsersRepository.addUser(
+                firebaseUsersRepository.addUser(
                     User("",
                         state.name, state.login, state.password,
                         arrayListOf()

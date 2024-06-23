@@ -15,7 +15,7 @@ interface  UserDao {
     suspend fun insertUser(user: UserEntity)
 
     //read users
-    @Query("SELECT * FROM user_saved where id=0")
+    @Query("SELECT * FROM user_saved")
     fun getUser(): UserEntity?
 
     //update user

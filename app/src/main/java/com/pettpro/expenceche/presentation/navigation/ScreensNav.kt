@@ -16,7 +16,7 @@ import com.pettpro.expenceche.presentation.welcome.WelcomeScreen
 @ExperimentalAnimationApi
 @Composable
 fun ScreensNav(navController: NavHostController) {
-    NavHost(navController = navController, startDestination = NavigationItem.Home.route) {
+    NavHost(navController = navController, startDestination = NavigationItem.Welcome.route) {
         composable(NavigationItem.Welcome.route) {
             WelcomeScreen(navController)
         }

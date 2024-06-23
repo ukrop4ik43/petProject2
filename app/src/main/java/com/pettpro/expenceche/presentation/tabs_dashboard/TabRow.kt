@@ -1,4 +1,4 @@
-package com.pettpro.expenceche.presentation.tabs
+package com.pettpro.expenceche.presentation.tabs_dashboard
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -8,32 +8,20 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Tab
 import androidx.compose.material.TabPosition
 import androidx.compose.material.TabRow
-import androidx.compose.material.TabRowDefaults
-import androidx.compose.material.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material.Text
-import androidx.compose.material.contentColorFor
-import androidx.compose.material.primarySurface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.UiComposable
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import com.pettpro.domain.home.TypeOfContentInDashBoardTab
 import com.pettpro.expenceche.presentation.colors.YellowCustom
-import com.pettpro.expenceche.presentation.colors.blackGradient
 import com.pettpro.expenceche.presentation.colors.blackGradient200
-import com.pettpro.expenceche.presentation.home.TabContent2
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -96,8 +84,8 @@ fun TabForHome() {
         state = pagerState, modifier = Modifier.fillMaxSize()
     ) { page ->
         when (page) {
-            0 -> TabContent2()
-            1 -> TabContent2()
+            0 -> TabContent(TypeOfContentInDashBoardTab.Expences)
+            1 -> TabContent(TypeOfContentInDashBoardTab.Incomes)
 
         }
     }

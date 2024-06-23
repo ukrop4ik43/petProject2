@@ -15,8 +15,13 @@ class UserRepositoryImpl(
 
     override fun getUser(): User {
         val user = database.getUser()
-        return User(user?.id ?: "", user?.name ?: "", user?.login ?: "",
-            user?.password ?: "", user?.arrayOfExpence ?: arrayListOf()
+        return User(
+            user?.id ?: "",
+            user?.name ?: "",
+            user?.login ?: "",
+            user?.password ?: "",
+            user?.arrayOfExpence ?: arrayListOf(),
+            user?.arrayOfIncomes ?: arrayListOf()
         )
     }
 

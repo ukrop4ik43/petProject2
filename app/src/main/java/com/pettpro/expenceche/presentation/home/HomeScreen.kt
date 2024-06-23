@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.pettpro.expenceche.R
 import com.pettpro.expenceche.presentation.colors.yellowBackgroundBrush
-import com.pettpro.expenceche.presentation.tabs.TabForHome
+import com.pettpro.expenceche.presentation.tabs_dashboard.TabForHome
 
 
 @Composable
@@ -68,11 +68,7 @@ fun HomeScreen(navController: NavHostController?) {
     }
 }
 
-@Composable
-fun TabContent2() {
-    // Content for Tab 2
-    Text("Content for Tab 2", modifier = Modifier.fillMaxSize())
-}
+
 
 @Preview
 @Composable

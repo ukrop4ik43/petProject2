@@ -2,6 +2,7 @@ package com.pettpro.expenceche.presentation.login
 
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -61,8 +62,19 @@ class LoginViewModel @Inject constructor(
     }
 
 
-    suspend fun saveUserToDb(){
-        userDatabaseUseCases.saveUser(User())
+    suspend fun saveUserToDb() {
+        Log.d(
+            "dasdas","saved ${loginVerifyingRepository.getActualUserToSave(
+                state.login,
+                userList
+            )} "
+        )
+        userDatabaseUseCases.saveUser(
+            loginVerifyingRepository.getActualUserToSave(
+                state.login,
+                userList
+            )
+        )
     }
 
     private fun submitData() {

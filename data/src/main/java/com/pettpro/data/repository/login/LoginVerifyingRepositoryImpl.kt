@@ -21,6 +21,15 @@ class LoginVerifyingRepositoryImpl @Inject constructor() : LoginVerifyingReposit
         return LoginValidationResults(true)
     }
 
+    override fun getActualUserToSave(login: String, users: MutableList<User>): User {
+        for (userData in users) {
+            if (userData.login == login) {
+                return userData
+            }
+        }
+        return User()
+    }
+
     private fun loginExists(login: String, users: MutableList<User>): Boolean {
         for (userData in users) {
             if (userData.login == login) {
@@ -34,13 +43,12 @@ class LoginVerifyingRepositoryImpl @Inject constructor() : LoginVerifyingReposit
         if (password.isEmpty()) {
             return LoginValidationResults(false, "Password is empty")
         }
-        if (password.any { it.isDigit() } && password.any { it.isLetter() }) {
-            return LoginValidationResults(
-                false,
-                "Password should contain letters and digits"
-            )
+        for(userItem in users){
+            if(userItem.login==login && userItem.password==password){
+                return LoginValidationResults(true)
+            }
         }
-        return LoginValidationResults(true)
+        return LoginValidationResults(false,"Wrong login or password")
     }
 
 }

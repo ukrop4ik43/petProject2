@@ -8,5 +8,6 @@ fun User.toEntity() = UserEntity(
     name = name,
     login = login,
     password = password,
-    arrayOfExpence = arrayOfExpence
+    arrayOfExpence = arrayOfExpence,
+    arrayOfIncomes = arrayOfIncomes
 )
