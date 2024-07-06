@@ -6,6 +6,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.google.accompanist.pager.ExperimentalPagerApi
+import com.pettpro.domain.home.TypeOfContentInDashBoardTab
+import com.pettpro.expenceche.presentation.add_expence_income.AddExpenceIncomeScreen
 import com.pettpro.expenceche.presentation.home.HomeScreen
 import com.pettpro.expenceche.presentation.login.LoginScreen
 import com.pettpro.expenceche.presentation.registration.RegisterScreen
@@ -28,6 +30,19 @@ fun ScreensNav(navController: NavHostController) {
         }
         composable(NavigationItem.Home.route) {
             HomeScreen(navController = navController)
+        }
+        composable(NavigationItem.AddExpenceIncome.route) { backStackEntry ->
+            val typeString = backStackEntry.arguments?.getString("typeOfContent")
+            val type = when (typeString) {
+                "expences" -> TypeOfContentInDashBoardTab.Expences
+                "incomes" -> TypeOfContentInDashBoardTab.Incomes
+
+                else -> {TypeOfContentInDashBoardTab.Incomes}
+            }
+            AddExpenceIncomeScreen(
+                navController = navController,
+                typeOfContentInDashBoardTab = type
+            )
         }
     }
 }

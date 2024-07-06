@@ -34,7 +34,7 @@ class DashBoardTabsViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                Log.d("dasdas","getted from database ${userDatabaseUseCases.getUser()}")
+                Log.d("dasdas", "getted from database ${userDatabaseUseCases.getUser()}")
                 _user.value = userDatabaseUseCases.getUser()
                 delay(2000)
             }
@@ -43,7 +43,12 @@ class DashBoardTabsViewModel @Inject constructor(
     }
 
     fun fetchData(typeOfContent: TypeOfContentInDashBoardTab, user: User) {
-        _screenState.value= homeScreenStateProvider.getStateOfHomeScreen(typeOfContent, user)
+        _screenState.value = homeScreenStateProvider.getStateOfHomeScreen(typeOfContent, user)
+    }
+
+    fun addExpenceOrIncome(typeOfContent: TypeOfContentInDashBoardTab) {
+        _screenState.value = HomeScreenState.AddUser(typeOfContent)
+
     }
 
 }

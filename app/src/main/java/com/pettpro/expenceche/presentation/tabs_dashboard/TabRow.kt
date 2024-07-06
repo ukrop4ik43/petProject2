@@ -19,6 +19,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.pettpro.domain.home.TypeOfContentInDashBoardTab
 import com.pettpro.expenceche.presentation.colors.YellowCustom
 import com.pettpro.expenceche.presentation.colors.blackGradient200
@@ -26,7 +27,7 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun TabForHome() {
+fun TabForHome(navController: NavHostController?) {
     val coroutineScope = rememberCoroutineScope()
     val pagerState = rememberPagerState(
         initialPage = 0, initialPageOffsetFraction = 0f
@@ -84,8 +85,8 @@ fun TabForHome() {
         state = pagerState, modifier = Modifier.fillMaxSize()
     ) { page ->
         when (page) {
-            0 -> TabContent(TypeOfContentInDashBoardTab.Expences)
-            1 -> TabContent(TypeOfContentInDashBoardTab.Incomes)
+            0 -> TabContent(TypeOfContentInDashBoardTab.Expences,navController)
+            1 -> TabContent(TypeOfContentInDashBoardTab.Incomes,navController)
 
         }
     }

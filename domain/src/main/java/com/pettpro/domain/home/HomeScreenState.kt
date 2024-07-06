@@ -8,4 +8,6 @@ sealed class HomeScreenState {
     data object NoInfo : HomeScreenState()
 
     data class ReadyToShow(val info:String ): HomeScreenState()
+
+    data class AddUser(val typeOfContent:TypeOfContentInDashBoardTab) : HomeScreenState()
 }

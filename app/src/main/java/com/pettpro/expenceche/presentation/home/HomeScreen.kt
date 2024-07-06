@@ -21,14 +21,16 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.pettpro.expenceche.R
 import com.pettpro.expenceche.presentation.colors.yellowBackgroundBrush
+import com.pettpro.expenceche.presentation.login.LoginViewModel
 import com.pettpro.expenceche.presentation.tabs_dashboard.TabForHome
 
 
 @Composable
-fun HomeScreen(navController: NavHostController?) {
+fun HomeScreen(navController: NavHostController?, viewModel: HomeViewModel = hiltViewModel()) {
 
     Column(
         modifier = Modifier
@@ -64,10 +66,9 @@ fun HomeScreen(navController: NavHostController?) {
                 )
             }
         }
-        TabForHome()
+        TabForHome(navController)
     }
 }
-
 
 
 @Preview

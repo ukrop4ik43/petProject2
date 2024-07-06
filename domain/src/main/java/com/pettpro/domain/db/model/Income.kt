@@ -4,5 +4,5 @@ data class Income(
     val id:String,
     val date:String,
     val amount:Double,
-    val category: CategoryOfExpence
+    val category: CategoryOfIncome
 )

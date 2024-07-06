@@ -6,13 +6,17 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
 import com.pettpro.domain.db.model.User
 import com.pettpro.domain.home.HomeScreenState
 import com.pettpro.domain.home.TypeOfContentInDashBoardTab
+import com.pettpro.expenceche.presentation.navigation.NavigationItem
 
 @Composable
 fun TabContent(
-    typeOfContent: TypeOfContentInDashBoardTab, viewModel: DashBoardTabsViewModel = hiltViewModel()
+    typeOfContent: TypeOfContentInDashBoardTab,
+    navController: NavHostController?,
+    viewModel: DashBoardTabsViewModel = hiltViewModel()
 ) {
     val user by viewModel.user.collectAsState()
     val screenState by viewModel.screenState.collectAsState()
@@ -20,7 +24,7 @@ fun TabContent(
     when (screenState) {
         is HomeScreenState.Starting -> {
             Log.d("dasdas", "starting")
-            LoadingElementOnDashboard()
+            LoadingElementOnDashboard { viewModel.addExpenceOrIncome(typeOfContent) }
             LaunchedEffect(screenState) {
                 viewModel.fetchData(
                     typeOfContent,
@@ -34,17 +38,21 @@ fun TabContent(
 
         is HomeScreenState.Loading -> {
             Log.d("dasdas", "loading")
-            LoadingElementOnDashboard()
+            LoadingElementOnDashboard { viewModel.addExpenceOrIncome(typeOfContent) }
         }
 
         is HomeScreenState.NoInfo -> {
             Log.d("dasdas", "no info")
-            NoInfoScreen(typeOfContent)
+            NoInfoScreen(typeOfContent) { viewModel.addExpenceOrIncome(typeOfContent) }
         }
 
         is HomeScreenState.ReadyToShow -> {
             Log.d("dasdas", "ready")
             (screenState as HomeScreenState.ReadyToShow).info
+        }
+
+        is HomeScreenState.AddUser -> {
+            navController?.navigate(NavigationItem.AddExpenceIncome.createRoute(typeOfContent))
         }
     }
 }

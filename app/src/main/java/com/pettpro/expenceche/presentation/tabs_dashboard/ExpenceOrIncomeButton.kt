@@ -24,12 +24,12 @@ import com.pettpro.expenceche.presentation.colors.YellowCustomSecond
 
 
 @Composable
-fun ExpenceOrIncomeButton(modifier: Modifier) {
+fun ExpenceOrIncomeButton(modifier: Modifier, onClick: () -> Unit) {
 
     FloatingActionButton(
         containerColor = DarkGrey200,
 
-        onClick = { },
+        onClick = { onClick() },
         modifier = modifier,
         shape = CircleShape,
     ) {

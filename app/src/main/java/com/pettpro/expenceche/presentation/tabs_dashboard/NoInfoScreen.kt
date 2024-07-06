@@ -18,7 +18,7 @@ import com.pettpro.domain.home.TypeOfContentInDashBoardTab
 import com.pettpro.expenceche.presentation.colors.DarkGrey200
 
 @Composable
-fun NoInfoScreen(typeOfContent: TypeOfContentInDashBoardTab) {
+fun NoInfoScreen(typeOfContent: TypeOfContentInDashBoardTab,onClick: () -> Unit) {
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.TopCenter) {
         Text(
             modifier = Modifier
@@ -39,6 +39,8 @@ fun NoInfoScreen(typeOfContent: TypeOfContentInDashBoardTab) {
                 .size(70.dp)
                 .align(Alignment.BottomEnd)
                 .padding(12.dp)
-        )
+        ){
+            onClick()
+        }
     }
 }

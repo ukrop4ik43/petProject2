@@ -1,6 +1,5 @@
 package com.pettpro.expenceche.presentation.tabs_dashboard
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
@@ -10,11 +9,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.pettpro.domain.home.TypeOfContentInDashBoardTab
 import com.pettpro.expenceche.presentation.colors.DarkGrey200
 
 
 @Composable
-fun LoadingElementOnDashboard() {
+fun LoadingElementOnDashboard(
+    onClick: () -> Unit
+) {
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.TopCenter) {
         CircularProgressIndicator(
             modifier = Modifier
@@ -28,6 +30,8 @@ fun LoadingElementOnDashboard() {
                 .size(70.dp)
                 .align(Alignment.BottomEnd)
                 .padding(12.dp)
-        )
+        ) {
+            onClick()
+        }
     }
 }

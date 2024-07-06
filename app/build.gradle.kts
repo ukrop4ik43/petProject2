@@ -62,6 +62,7 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -73,8 +74,8 @@ dependencies {
     implementation ("com.google.dagger:hilt-android:2.50")
     kapt ("com.google.dagger:hilt-android-compiler:2.50")
     implementation ("androidx.core:core-splashscreen:1.0.0-beta01")
-
-    // Navigation Compos
+    implementation("androidx.compose.material3:material3:1.3.0-alpha04")
+    // Navigation Compose
     implementation ("androidx.compose.material:material:1.0.5")
     implementation ("androidx.compose.runtime:runtime-livedata:1.0.5")
     implementation ("com.google.accompanist:accompanist-pager:0.20.3")
@@ -95,5 +96,6 @@ dependencies {
     implementation("com.google.firebase:firebase-analytics")
     implementation("com.google.firebase:firebase-database")
     implementation("com.google.android.gms:play-services-auth:21.0.0")
+
 
 }
