@@ -10,30 +10,6 @@ import com.pettpro.domain.db.model.Income
 
 class UserConvertor {
     private val gson = Gson()
-
-    @TypeConverter
-    fun fromExpenceArrayList(value: ArrayList<Expence>?): String? {
-        return gson.toJson(value)
-    }
-
-    @TypeConverter
-    fun toArrayList(value: String?): ArrayList<Expence>? {
-        val type = object : TypeToken<ArrayList<Expence>>() {}.type
-        return gson.fromJson(value, type)
-    }
-
-
-    @TypeConverter
-    fun fromIncomeArrayList(value: ArrayList<Income>?): String? {
-        return gson.toJson(value)
-    }
-
-    @TypeConverter
-    fun toArrayIncomeList(value: String?): ArrayList<Income>? {
-        val type = object : TypeToken<ArrayList<Income>>() {}.type
-        return gson.fromJson(value, type)
-    }
-
     @TypeConverter
     fun fromCategoryExpence(category: CategoryOfExpence?): String? {
         return category?.javaClass?.simpleName
@@ -69,4 +45,28 @@ class UserConvertor {
             else -> null
         }
     }
+    @TypeConverter
+    fun fromExpenceArrayList(value: ArrayList<Expence>?): String? {
+        return gson.toJson(value)
+    }
+
+    @TypeConverter
+    fun toArrayList(value: String?): ArrayList<Expence>? {
+        val type = object : TypeToken<ArrayList<Expence>>() {}.type
+        return gson.fromJson(value, type)
+    }
+
+
+    @TypeConverter
+    fun fromIncomeArrayList(value: ArrayList<Income>?): String? {
+        return gson.toJson(value)
+    }
+
+    @TypeConverter
+    fun toArrayIncomeList(value: String?): ArrayList<Income>? {
+        val type = object : TypeToken<ArrayList<Income>>() {}.type
+        return gson.fromJson(value, type)
+    }
+
+
 }

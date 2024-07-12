@@ -64,6 +64,7 @@ fun AddExpenceIncomeScreen(
         viewModel.validationEvents.collect { event ->
             when (event) {
                 is AddexpenceViewModel.ValidationEvent.Success -> {
+                    viewModel.onEvent(AddExpenceIncomeFormEvent.Final)
                     viewModel.onEvent(AddExpenceIncomeFormEvent.ShowToast("Successfully Added"))
                     navController?.navigate(NavigationItem.Home.route)
                 }

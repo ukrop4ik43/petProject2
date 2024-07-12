@@ -4,9 +4,9 @@ import com.pettpro.domain.db.model.CategoryOfExpence
 import com.pettpro.domain.db.model.CategoryOfIncome
 
 data class AddExpenceDataState(
-    val categoryOfIncome:CategoryOfIncome?=null,
+    val categoryOfIncome:CategoryOfIncome?=CategoryOfIncome.P2P,
     val categoryOfIncomeError:String? =null,
-    val categoryOfExpence:CategoryOfExpence?=null,
+    val categoryOfExpence:CategoryOfExpence?=CategoryOfExpence.Grocery,
     val categoryOfExpenceError:String? =null,
     val amount:String="",
     val amountError:String? =null

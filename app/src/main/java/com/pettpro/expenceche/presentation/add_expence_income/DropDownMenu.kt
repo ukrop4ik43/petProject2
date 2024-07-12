@@ -80,6 +80,7 @@ fun DropDownMenu(
             }
         )
     }
+    viewModel.onEvent(AddExpenceIncomeFormEvent.SetTypeOfMoneyFlow(typeOfContentInDashBoardTab!!))
 
     Box(
         modifier = Modifier
@@ -88,7 +89,8 @@ fun DropDownMenu(
         ExposedDropdownMenuBox(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(70.dp).padding(horizontal = 20.dp),
+                .height(70.dp)
+                .padding(horizontal = 20.dp),
             expanded = expanded,
             onExpandedChange = {
                 expanded = !expanded

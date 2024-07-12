@@ -1,6 +1,8 @@
 package com.pettpro.expenceche.di
 
+import com.pettpro.data.repository.add_expence_income.ActualTimeRepositoryImpl
 import com.pettpro.data.repository.add_expence_income.AddExpenceIncomeVerifyingRepositoryImpl
+import com.pettpro.domain.add_expence_income.ActualTimeRepository
 import com.pettpro.domain.add_expence_income.AddExpenceIncomeVerifyingRepository
 import dagger.Module
 import dagger.Provides
@@ -14,6 +16,11 @@ class AddExpenceIncomeModule {
     @Provides
     internal fun provideAddExpenceIncomeVerifyingRepository(): AddExpenceIncomeVerifyingRepository {
         return AddExpenceIncomeVerifyingRepositoryImpl()
+    }
+
+    @Provides
+    internal fun provideActualTimeRepository(): ActualTimeRepository {
+        return ActualTimeRepositoryImpl()
     }
 
 }

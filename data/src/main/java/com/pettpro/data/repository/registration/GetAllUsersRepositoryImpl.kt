@@ -40,4 +40,10 @@ class FirebaseUsersRegistrationRepositoryImpl(
 
     }
 
+    override fun updateUser(user: User) {
+        rootRef.child("users").child(user.id).setValue(
+            user
+        )
+    }
+
 }

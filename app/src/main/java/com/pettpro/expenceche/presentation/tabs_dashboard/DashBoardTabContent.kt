@@ -23,6 +23,7 @@ fun TabContent(
 
     when (screenState) {
         is HomeScreenState.Starting -> {
+
             Log.d("dasdas", "starting")
             LoadingElementOnDashboard { viewModel.addExpenceOrIncome(typeOfContent) }
             LaunchedEffect(screenState) {
@@ -48,6 +49,7 @@ fun TabContent(
 
         is HomeScreenState.ReadyToShow -> {
             Log.d("dasdas", "ready")
+            NoInfoScreen(typeOfContent) { viewModel.addExpenceOrIncome(typeOfContent) }
             (screenState as HomeScreenState.ReadyToShow).info
         }
 
