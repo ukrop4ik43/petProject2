@@ -7,7 +7,7 @@ sealed class HomeScreenState {
         data object Loading : HomeScreenState()
     data object NoInfo : HomeScreenState()
 
-    data class ReadyToShow(val info:String ): HomeScreenState()
+    data object ReadyToShow : HomeScreenState()
 
     data class AddUser(val typeOfContent:TypeOfContentInDashBoardTab) : HomeScreenState()
 }

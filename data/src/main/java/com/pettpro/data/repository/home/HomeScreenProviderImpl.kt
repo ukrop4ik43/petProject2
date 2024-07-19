@@ -28,7 +28,7 @@ class HomeScreenProviderImpl @Inject constructor() : HomeScreenProvider {
          return if(user.arrayOfExpence.size==0){
              HomeScreenState.NoInfo
          }else{
-             HomeScreenState.ReadyToShow("dsasa")
+             HomeScreenState.ReadyToShow
          }
     }
 
@@ -36,7 +36,7 @@ class HomeScreenProviderImpl @Inject constructor() : HomeScreenProvider {
         return if(user.arrayOfIncomes.size==0){
             HomeScreenState.NoInfo
         }else{
-            HomeScreenState.ReadyToShow("dsasa")
+            HomeScreenState.ReadyToShow
         }
     }
 }

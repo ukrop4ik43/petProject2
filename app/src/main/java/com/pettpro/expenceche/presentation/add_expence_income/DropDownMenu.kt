@@ -1,5 +1,6 @@
 package com.pettpro.expenceche.presentation.add_expence_income
 
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -109,9 +110,11 @@ fun DropDownMenu(
                     textAlign = TextAlign.Start
                 ),
                 onValueChange = {
+                    Log.d("chartData", "changing category $it")
                     if (typeOfContentInDashBoardTab == TypeOfContentInDashBoardTab.Incomes) {
                         viewModel.onEvent(AddExpenceIncomeFormEvent.CategoryIncomeChange(it))
                     } else {
+
                         viewModel.onEvent(AddExpenceIncomeFormEvent.CategoryExpenceChange(it))
                     }
                 },
@@ -148,6 +151,13 @@ fun DropDownMenu(
                                     TextElementOfDropdownMenu(item.toString())
                                 },
                                 onClick = {
+                                    viewModel.onEvent(
+                                        AddExpenceIncomeFormEvent.CategoryIncomeChange(
+                                            item.toString()
+                                        )
+                                    )
+
+                                    Log.d("chartData", "incomee clicked")
                                     selectedText = item.toString()
                                     expanded = false
                                 }
@@ -161,6 +171,12 @@ fun DropDownMenu(
                                     TextElementOfDropdownMenu(item.toString())
                                 },
                                 onClick = {
+                                    viewModel.onEvent(
+                                        AddExpenceIncomeFormEvent.CategoryExpenceChange(
+                                            item.toString()
+                                        )
+                                    )
+                                    Log.d("chartData", "expence clicked")
                                     selectedText = item.toString()
                                     expanded = false
                                 }

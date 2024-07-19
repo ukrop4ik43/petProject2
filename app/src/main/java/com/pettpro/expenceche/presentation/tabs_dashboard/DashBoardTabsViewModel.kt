@@ -8,6 +8,7 @@ import com.pettpro.domain.home.HomeScreenProvider
 import com.pettpro.domain.usecases.userdb.UserDatabaseUseCases
 import com.pettpro.domain.home.HomeScreenState
 import com.pettpro.domain.home.TypeOfContentInDashBoardTab
+import com.pettpro.domain.tabs_dashboard.ChartDataExtractor
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -22,7 +23,8 @@ import javax.inject.Inject
 @HiltViewModel
 class DashBoardTabsViewModel @Inject constructor(
     private val userDatabaseUseCases: UserDatabaseUseCases,
-    private val homeScreenStateProvider: HomeScreenProvider
+    private val homeScreenStateProvider: HomeScreenProvider,
+    private val chartDataExtractor: ChartDataExtractor
 ) : ViewModel() {
     private val _screenState = MutableStateFlow<HomeScreenState>(HomeScreenState.Starting)
     val screenState: StateFlow<HomeScreenState> = _screenState.asStateFlow()
@@ -31,14 +33,22 @@ class DashBoardTabsViewModel @Inject constructor(
     private val _user = MutableStateFlow(User())
     val user: StateFlow<User> = _user.asStateFlow()
 
-    init {
-        viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                Log.d("dasdas", "getted from database ${userDatabaseUseCases.getUser()}")
-                _user.value = userDatabaseUseCases.getUser()
-                delay(2000)
-            }
+   fun getUserData(){
+       viewModelScope.launch {
+           withContext(Dispatchers.IO) {
+               Log.d("dasdas", "getted from database ${userDatabaseUseCases.getUser()}")
+               _user.value = userDatabaseUseCases.getUser()
+               delay(2000)
+           }
 
+       }
+   }
+
+    fun getDataForTheChart(typeOfContent: TypeOfContentInDashBoardTab): Map<String, Int> {
+        return if(typeOfContent==TypeOfContentInDashBoardTab.Incomes){
+            chartDataExtractor.dataForIncome(user.value.arrayOfIncomes)
+        }else{
+            chartDataExtractor.dataForExpence(user.value.arrayOfExpence)
         }
     }
 

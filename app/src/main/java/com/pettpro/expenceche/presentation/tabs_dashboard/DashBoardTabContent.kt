@@ -48,13 +48,19 @@ fun TabContent(
         }
 
         is HomeScreenState.ReadyToShow -> {
-            Log.d("dasdas", "ready")
-            NoInfoScreen(typeOfContent) { viewModel.addExpenceOrIncome(typeOfContent) }
-            (screenState as HomeScreenState.ReadyToShow).info
+
+            InfoScreen(viewModel.getDataForTheChart(typeOfContent)) {
+                viewModel.addExpenceOrIncome(
+                    typeOfContent
+                )
+            }
+
+//            (screenState as HomeScreenState.ReadyToShow).info
         }
 
         is HomeScreenState.AddUser -> {
             navController?.navigate(NavigationItem.AddExpenceIncome.createRoute(typeOfContent))
         }
     }
+    viewModel.getUserData()
 }
