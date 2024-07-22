@@ -11,7 +11,7 @@ class ActualTimeRepositoryImpl @Inject constructor() :
     ActualTimeRepository {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun getActualTime(): String {
-        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
+        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
         val current = LocalDateTime.now().format(formatter)
         return current
     }

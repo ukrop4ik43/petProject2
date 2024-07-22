@@ -25,22 +25,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Color.Companion.Black
-import androidx.compose.ui.graphics.Color.Companion.Blue
-import androidx.compose.ui.graphics.Color.Companion.Gray
-import androidx.compose.ui.graphics.Color.Companion.Green
-import androidx.compose.ui.graphics.Color.Companion.Red
-import androidx.compose.ui.graphics.Color.Companion.Yellow
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.pettpro.domain.db.model.Expence
-import com.pettpro.domain.db.model.Income
-import com.pettpro.domain.home.TypeOfContentInDashBoardTab
-import com.pettpro.expenceche.ui.theme.Purple40
+import com.pettpro.expenceche.presentation.colors.colorsOfCategories
 
 @Composable
 fun PieChart(
@@ -53,31 +44,14 @@ fun PieChart(
     val totalSum = data.values.sum()
     val floatValue = mutableListOf<Float>()
 
-    // To set the value of each Arc according to
-    // the value given in the data, we have used a simple formula.
-    // For a detailed explanation check out the Medium Article.
-    // The link is in the about section and readme file of this GitHub Repository
     data.values.forEachIndexed { index, values ->
         floatValue.add(index, 360 * values.toFloat() / totalSum.toFloat())
     }
-
-    // add the colors as per the number of data(no. of pie chart entries)
-    // so that each data will get a color
-    val colors = listOf(
-        Color(0xFFB389FF),
-        Color(0xFF65F143),
-        Color(0xFFF7BC6E),
-        Color(0xFF76ADFF),
-        Color(0xFFFF5722),
-        Color(0xFF0E8F7B),
-        Color(0xFFFAEE84)
-    )
 
     var animationPlayed by remember { mutableStateOf(false) }
 
     var lastValue = 0f
 
-    // it is the diameter value of the Pie
     val animateSize by animateFloatAsState(
         targetValue = if (animationPlayed) radiusOuter.value * 2f else 0f,
         animationSpec = tween(
@@ -87,8 +61,6 @@ fun PieChart(
         )
     )
 
-    // if you want to stabilize the Pie Chart you can use value -90f
-    // 90f is used to complete 1/4 of the rotation
     val animateRotation by animateFloatAsState(
         targetValue = if (animationPlayed) 90f * 11f else 0f,
         animationSpec = tween(
@@ -98,7 +70,6 @@ fun PieChart(
         )
     )
 
-    // to play the animation only once when the function is Created or Recomposed
     LaunchedEffect(key1 = true) {
         animationPlayed = true
     }
@@ -107,7 +78,6 @@ fun PieChart(
         modifier = Modifier.fillMaxWidth()
     ) {
 
-        // Pie Chart using Canvas Arc
         Box(
             modifier = Modifier
                 .size(animateSize.dp)
@@ -120,10 +90,9 @@ fun PieChart(
                     .size(radiusOuter * 2f)
                     .rotate(animateRotation)
             ) {
-                // draw each Arc for each data entry in Pie Chart
                 floatValue.forEachIndexed { index, value ->
                     drawArc(
-                        color = colors[index],
+                        color = colorsOfCategories[index],
                         lastValue,
                         value,
                         useCenter = false,
@@ -134,11 +103,9 @@ fun PieChart(
             }
         }
 
-        // To see the data in more structured way
-        // Compose Function in which Items are showing data
         DetailsPieChart(
             data = data,
-            colors = colors
+            colors = colorsOfCategories
         )
 
     }

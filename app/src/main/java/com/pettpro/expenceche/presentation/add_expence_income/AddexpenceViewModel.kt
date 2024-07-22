@@ -13,6 +13,7 @@ import com.pettpro.domain.db.model.CategoryOfIncome
 import com.pettpro.domain.db.model.Expence
 import com.pettpro.domain.db.model.Income
 import com.pettpro.domain.db.model.User
+import com.pettpro.domain.home.CategoriesMapper
 import com.pettpro.domain.home.TypeOfContentInDashBoardTab
 import com.pettpro.domain.login.LoginVerifyingRepository
 import com.pettpro.domain.registration.FirebaseUsersRegistrationRepository
@@ -34,6 +35,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AddexpenceViewModel @Inject constructor(
+    private val categoriesMapper:CategoriesMapper,
     private val addExpenceIncomeVerifyingRepository: AddExpenceIncomeVerifyingRepository,
     private val firebaseUsersRegistrationRepository: FirebaseUsersRegistrationRepository,
     private val toastControl: ToastControl,
@@ -67,12 +69,12 @@ class AddexpenceViewModel @Inject constructor(
             }
 
             is AddExpenceIncomeFormEvent.CategoryExpenceChange -> {
-                state = state.copy(categoryOfExpence = setExpenceCaterogy(event.category))
+                state = state.copy(categoryOfExpence = categoriesMapper.setExpenceCaterogy(event.category))
             }
 
             is AddExpenceIncomeFormEvent.CategoryIncomeChange -> {
 
-                state = state.copy(categoryOfIncome = setIncomeCaterogy(event.category))
+                state = state.copy(categoryOfIncome = categoriesMapper.setIncomeCaterogy(event.category))
             }
             is AddExpenceIncomeFormEvent.SetTypeOfMoneyFlow ->{
                 if(event.type== TypeOfContentInDashBoardTab.Incomes){
@@ -148,46 +150,10 @@ class AddexpenceViewModel @Inject constructor(
         }
     }
 
-    private fun setIncomeCaterogy(category: String): CategoryOfIncome {
-        when (category) {
-            "P2P"
-            -> return CategoryOfIncome.P2P
-
-            "Replenishment"
-            -> return CategoryOfIncome.Replenishment
-
-            "Other"
-            -> return CategoryOfIncome.Other
-        }
-        return CategoryOfIncome.Other
-    }
 
 
-    private fun setExpenceCaterogy(category: String): CategoryOfExpence {
-        when (category) {
-            "Grocery"
-            -> return CategoryOfExpence.Grocery
 
-            "Entertainment"
-            -> return CategoryOfExpence.Entertainment
 
-            "Restaurants"
-            -> return CategoryOfExpence.Restaurants
-
-            "Electronic"
-            -> return CategoryOfExpence.Electronic
-
-            "Transport"
-            -> return CategoryOfExpence.Transport
-
-            "Healthcare"
-            -> return CategoryOfExpence.Healthcare
-
-            "Other"
-            -> return CategoryOfExpence.Other
-        }
-        return CategoryOfExpence.Other
-    }
 
     sealed class ValidationEvent {
         data object Success : ValidationEvent()

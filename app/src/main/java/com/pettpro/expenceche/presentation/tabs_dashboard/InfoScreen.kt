@@ -18,7 +18,6 @@ import com.pettpro.domain.home.TypeOfContentInDashBoardTab
 
 @Composable
 fun InfoScreen(dataForTheChart: Map<String, Int>, onClick: () -> Unit) {
-
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.TopCenter) {
         PieChart(
             dataForTheChart

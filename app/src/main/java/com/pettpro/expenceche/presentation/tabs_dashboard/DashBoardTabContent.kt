@@ -55,7 +55,6 @@ fun TabContent(
                 )
             }
 
-//            (screenState as HomeScreenState.ReadyToShow).info
         }
 
         is HomeScreenState.AddUser -> {
