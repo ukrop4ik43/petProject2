@@ -49,7 +49,7 @@ fun TabContent(
 
         is HomeScreenState.ReadyToShow -> {
 
-            InfoScreen(viewModel.getDataForTheChart(typeOfContent)) {
+            InfoScreen(typeOfContent,user.arrayOfIncomes, user.arrayOfExpence ,viewModel.getDataForTheChart(typeOfContent)) {
                 viewModel.addExpenceOrIncome(
                     typeOfContent
                 )

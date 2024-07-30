@@ -1,27 +1,58 @@
 package com.pettpro.expenceche.presentation.tabs_dashboard
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.Text
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import com.pettpro.domain.db.model.Expence
+import com.pettpro.domain.db.model.Income
 import com.pettpro.domain.home.TypeOfContentInDashBoardTab
+import com.pettpro.expenceche.presentation.home.custom_view.ViewOfExpence
+import com.pettpro.expenceche.presentation.home.custom_view.ViewOfIncome
+import java.lang.reflect.Type
 
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun InfoScreen(dataForTheChart: Map<String, Int>, onClick: () -> Unit) {
+fun InfoScreen(
+    typeOfContent: TypeOfContentInDashBoardTab,
+    arrayListOfIncome: ArrayList<Income>,
+    arrayListOfExpence: ArrayList<Expence>,
+    dataForTheChart: Map<String, Int>,
+    onClick: () -> Unit
+) {
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.TopCenter) {
-        PieChart(
-            dataForTheChart
-        )
+        Column(
+            modifier = Modifier
+                .verticalScroll(rememberScrollState())
+        ) {
+            PieChart(
+                dataForTheChart
+            )
+            if (typeOfContent == TypeOfContentInDashBoardTab.Incomes) {
+                for (item in arrayListOfIncome) {
+                    ViewOfIncome(income = item)
+                }
+                Spacer(modifier = Modifier.height(20.dp))
+            } else {
+                for (item in arrayListOfExpence) {
+                    ViewOfExpence(expence = item)
+                }
+                Spacer(modifier = Modifier.height(20.dp))
+            }
+        }
+
         ExpenceOrIncomeButton(
             modifier = Modifier
                 .size(70.dp)
