@@ -57,18 +57,11 @@ fun HomeScreen(navController: NavHostController?, viewModel: HomeViewModel = hil
                 modifier = Modifier.fillMaxWidth(),
                 contentAlignment = Alignment.Center
             ) {
-                Image(
-                    painterResource(R.drawable.baseline_settings_24),
-                    contentDescription = "",
-                    modifier = Modifier
-                        .height(90.dp)
-                        .padding(vertical = 3.dp)
-                        .padding(start = 7.dp)
-                        .align(Alignment.CenterStart)
-                )
+
                 Text(
                     modifier = Modifier
-                        .padding(top = 1.dp)
+                        .padding(top = 20.dp)
+                        .height(50.dp)
                         .align(Alignment.Center),
                     text = "Dashboard",
                     fontSize = 25.sp,
