@@ -76,8 +76,3 @@ fun HomeScreen(navController: NavHostController?, viewModel: HomeViewModel = hil
 }
 
 
-@Preview
-@Composable
-fun show() {
-    HomeScreen(navController = null)
-}
