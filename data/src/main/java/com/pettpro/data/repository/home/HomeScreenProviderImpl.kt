@@ -19,6 +19,7 @@ class HomeScreenProviderImpl @Inject constructor() : HomeScreenProvider {
             }
 
             TypeOfContentInDashBoardTab.Incomes ->{
+                Log.d("dasdas", "incomes")
                 checkForIncomes(user)
             }
         }
@@ -34,6 +35,7 @@ class HomeScreenProviderImpl @Inject constructor() : HomeScreenProvider {
 
     private fun checkForIncomes(user: User): HomeScreenState {
         return if(user.arrayOfIncomes.size==0){
+            Log.d("dasdas", "no incomes")
             HomeScreenState.NoInfo
         }else{
             HomeScreenState.ReadyToShow

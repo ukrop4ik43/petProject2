@@ -1,6 +1,8 @@
 package com.pettpro.expenceche.presentation.tabs_dashboard
 
+import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -12,6 +14,7 @@ import com.pettpro.domain.home.HomeScreenState
 import com.pettpro.domain.home.TypeOfContentInDashBoardTab
 import com.pettpro.expenceche.presentation.navigation.NavigationItem
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun TabContent(
     typeOfContent: TypeOfContentInDashBoardTab,
@@ -20,7 +23,7 @@ fun TabContent(
 ) {
     val user by viewModel.user.collectAsState()
     val screenState by viewModel.screenState.collectAsState()
-
+        viewModel.getUserData()
     when (screenState) {
         is HomeScreenState.Starting -> {
 
@@ -48,8 +51,15 @@ fun TabContent(
         }
 
         is HomeScreenState.ReadyToShow -> {
+            Log.d("dasdas", "ready to show,${user.arrayOfIncomes}")
 
-            InfoScreen(typeOfContent,user.arrayOfIncomes, user.arrayOfExpence ,viewModel.getDataForTheChart(typeOfContent)) {
+
+            InfoScreen(
+                typeOfContent,
+                user.arrayOfIncomes,
+                user.arrayOfExpence,
+                viewModel.getDataForTheChart(typeOfContent)
+            ) {
                 viewModel.addExpenceOrIncome(
                     typeOfContent
                 )
@@ -61,5 +71,5 @@ fun TabContent(
             navController?.navigate(NavigationItem.AddExpenceIncome.createRoute(typeOfContent))
         }
     }
-    viewModel.getUserData()
+
 }

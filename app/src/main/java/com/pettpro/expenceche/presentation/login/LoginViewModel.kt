@@ -16,6 +16,7 @@ import com.pettpro.domain.usecases.userdb.UserDatabaseUseCases
 import com.pettpro.expenceche.presentation.login.model.LoginDataState
 import com.pettpro.expenceche.presentation.login.model.LoginFormEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
@@ -26,8 +27,9 @@ class LoginViewModel @Inject constructor(
     private val loginVerifyingRepository: LoginVerifyingRepository,
     private val getAllUsersRepository: FirebaseUsersRegistrationRepository,
     private val toastControl: ToastControl,
-    private val userDatabaseUseCases: UserDatabaseUseCases
-) : ViewModel() {
+    private val userDatabaseUseCases: UserDatabaseUseCases,
+
+    ) : ViewModel() {
     @SuppressLint("MutableCollectionMutableState")
     var userList: MutableList<User> = mutableListOf()
 
@@ -63,11 +65,14 @@ class LoginViewModel @Inject constructor(
 
 
     suspend fun saveUserToDb() {
+        userDatabaseUseCases.deleteUser()
         Log.d(
-            "dasdas","saved ${loginVerifyingRepository.getActualUserToSave(
-                state.login,
-                userList
-            )} "
+            "dasdas", "saved ${
+                loginVerifyingRepository.getActualUserToSave(
+                    state.login,
+                    userList
+                )
+            } "
         )
         userDatabaseUseCases.saveUser(
             loginVerifyingRepository.getActualUserToSave(
@@ -75,6 +80,29 @@ class LoginViewModel @Inject constructor(
                 userList
             )
         )
+    }
+
+    suspend fun updateUserInDb() {
+        Log.d(
+            "dasdas", "saved ${
+                loginVerifyingRepository.getActualUserToSave(
+                    state.login,
+                    userList
+                )
+            } "
+        )
+        userDatabaseUseCases.updateUser(
+            loginVerifyingRepository.getActualUserToSave(
+                state.login,
+                userList
+            )
+        )
+        viewModelScope.launch(Dispatchers.IO) {
+            Log.d(
+                "dasdas", "getteduser ${userDatabaseUseCases.getUser()} "
+            )
+        }
+
     }
 
     private fun submitData() {

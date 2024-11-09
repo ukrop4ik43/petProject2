@@ -11,7 +11,7 @@ import com.pettpro.domain.db.model.User
 @Dao
 interface  UserDao {
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertUser(user: UserEntity)
 
     //read users

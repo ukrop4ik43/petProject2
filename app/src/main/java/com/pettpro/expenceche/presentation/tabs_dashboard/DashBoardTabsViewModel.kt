@@ -32,27 +32,27 @@ class DashBoardTabsViewModel @Inject constructor(
 
     private val _user = MutableStateFlow(User())
     val user: StateFlow<User> = _user.asStateFlow()
+    fun getUserData() {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                val gettedUserData = userDatabaseUseCases.getUser()
+                Log.d("dasdas", "getted from database ${gettedUserData}")
+                _user.value = gettedUserData
+            }
+        }
 
-   fun getUserData(){
-       viewModelScope.launch {
-           withContext(Dispatchers.IO) {
-               Log.d("dasdas", "getted from database ${userDatabaseUseCases.getUser()}")
-               _user.value = userDatabaseUseCases.getUser()
-               delay(2000)
-           }
-
-       }
-   }
+    }
 
     fun getDataForTheChart(typeOfContent: TypeOfContentInDashBoardTab): Map<String, Int> {
-        return if(typeOfContent==TypeOfContentInDashBoardTab.Incomes){
+        return if (typeOfContent == TypeOfContentInDashBoardTab.Incomes) {
             chartDataExtractor.dataForIncome(user.value.arrayOfIncomes)
-        }else{
+        } else {
             chartDataExtractor.dataForExpence(user.value.arrayOfExpence)
         }
     }
 
     fun fetchData(typeOfContent: TypeOfContentInDashBoardTab, user: User) {
+        Log.d("dasdas", "fetch data,type of content ${typeOfContent} , user ${user}")
         _screenState.value = homeScreenStateProvider.getStateOfHomeScreen(typeOfContent, user)
     }
 

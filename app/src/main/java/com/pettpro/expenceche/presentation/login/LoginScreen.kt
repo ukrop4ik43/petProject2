@@ -56,6 +56,7 @@ fun LoginScreen(navController: NavHostController?, viewModel: LoginViewModel = h
                 when (event) {
                     is LoginViewModel.ValidationEvent.Success -> {
                         viewModel.saveUserToDb()
+                        viewModel.updateUserInDb()
                         viewModel.onEvent(LoginFormEvent.ShowToast("Login successful"))
                         navController?.navigate(NavigationItem.Home.route)
                     }

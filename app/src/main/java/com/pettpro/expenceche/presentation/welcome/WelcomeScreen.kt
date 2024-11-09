@@ -57,7 +57,6 @@ fun WelcomeScreen(
                     navController.popBackStack()
                     navController.navigate(NavigationItem.Home.route)
                 }
-
             }
             if (splashViewModel.getOnBoardingState()) {
                 withContext(Dispatchers.Main){
