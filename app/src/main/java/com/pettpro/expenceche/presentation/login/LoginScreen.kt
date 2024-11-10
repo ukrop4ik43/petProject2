@@ -46,6 +46,11 @@ fun LoginScreen(navController: NavHostController?, viewModel: LoginViewModel = h
 
     val context = LocalContext.current
     val state = viewModel.state
+    LaunchedEffect(Unit) {
+        if (!viewModel.checkConnection()) {
+            navController?.navigate(NavigationItem.NoInternet.route)
+        }
+    }
     Column(
         modifier = Modifier
             .fillMaxSize()

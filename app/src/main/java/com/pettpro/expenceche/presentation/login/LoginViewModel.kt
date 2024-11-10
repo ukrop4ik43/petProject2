@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.pettpro.domain.db.model.User
 import com.pettpro.domain.login.LoginVerifyingRepository
+import com.pettpro.domain.no_internet.ConnectionCheckRepository
 import com.pettpro.domain.registration.FirebaseUsersRegistrationRepository
 import com.pettpro.domain.registration.ToastControl
 import com.pettpro.domain.usecases.userdb.UserDatabaseUseCases
@@ -28,7 +29,7 @@ class LoginViewModel @Inject constructor(
     private val getAllUsersRepository: FirebaseUsersRegistrationRepository,
     private val toastControl: ToastControl,
     private val userDatabaseUseCases: UserDatabaseUseCases,
-
+    private val connectionCheckRepository: ConnectionCheckRepository,
     ) : ViewModel() {
     @SuppressLint("MutableCollectionMutableState")
     var userList: MutableList<User> = mutableListOf()
@@ -60,9 +61,15 @@ class LoginViewModel @Inject constructor(
             is LoginFormEvent.Sumbit -> {
                 submitData()
             }
+
+            LoginFormEvent.NoConnection -> {
+
+            }
         }
     }
-
+    fun checkConnection(): Boolean {
+        return connectionCheckRepository.checkConnection()
+    }
 
     suspend fun saveUserToDb() {
         userDatabaseUseCases.deleteUser()

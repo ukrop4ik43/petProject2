@@ -7,11 +7,13 @@ enum class Screen {
     LOGIN,
     WELCOME,
     REGISTER,
-    ADD_EXPENCE_INCOME
+    ADD_EXPENCE_INCOME,
+    NO_INTERNET
 }
 
 sealed class NavigationItem(val route: String) {
     data object Home : NavigationItem(Screen.HOME.name)
+    data object NoInternet : NavigationItem(Screen.NO_INTERNET.name)
 
     data object Welcome : NavigationItem(Screen.WELCOME.name)
     data object Login : NavigationItem(Screen.LOGIN.name)

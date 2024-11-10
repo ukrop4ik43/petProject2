@@ -1,5 +1,7 @@
 package com.pettpro.expenceche.presentation.navigation
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
@@ -10,10 +12,12 @@ import com.pettpro.domain.home.TypeOfContentInDashBoardTab
 import com.pettpro.expenceche.presentation.add_expence_income.AddExpenceIncomeScreen
 import com.pettpro.expenceche.presentation.home.HomeScreen
 import com.pettpro.expenceche.presentation.login.LoginScreen
+import com.pettpro.expenceche.presentation.no_internet.NoInternetScreen
 import com.pettpro.expenceche.presentation.registration.RegisterScreen
 import com.pettpro.expenceche.presentation.welcome.WelcomeScreen
 
 
+@RequiresApi(Build.VERSION_CODES.O)
 @ExperimentalPagerApi
 @ExperimentalAnimationApi
 @Composable
@@ -30,6 +34,9 @@ fun ScreensNav(navController: NavHostController) {
         }
         composable(NavigationItem.Home.route) {
             HomeScreen(navController = navController)
+        }
+        composable(NavigationItem.NoInternet.route) {
+            NoInternetScreen(navController = navController)
         }
         composable(NavigationItem.AddExpenceIncome.route) { backStackEntry ->
             val typeString = backStackEntry.arguments?.getString("typeOfContent")
