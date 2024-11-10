@@ -13,8 +13,10 @@ class HomeScreenProviderImpl @Inject constructor() : HomeScreenProvider {
         typeOfContent: TypeOfContentInDashBoardTab,
         user: User
     ): HomeScreenState {
+        Log.d("dasdassss", "return state ${typeOfContent}")
         return when(typeOfContent) {
             TypeOfContentInDashBoardTab.Expences ->{
+                Log.d("dasdas", "expences")
                 checkForExpences(user)
             }
 

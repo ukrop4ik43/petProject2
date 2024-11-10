@@ -23,7 +23,13 @@ fun TabContent(
 ) {
     val user by viewModel.user.collectAsState()
     val screenState by viewModel.screenState.collectAsState()
+    LaunchedEffect(key1 = Unit) {
+        viewModel.setState(HomeScreenState.Starting)
         viewModel.getUserData()
+    }
+
+
+
     when (screenState) {
         is HomeScreenState.Starting -> {
 
@@ -52,18 +58,22 @@ fun TabContent(
 
         is HomeScreenState.ReadyToShow -> {
             Log.d("dasdas", "ready to show,${user.arrayOfIncomes}")
-
-
-            InfoScreen(
-                typeOfContent,
-                user.arrayOfIncomes,
-                user.arrayOfExpence,
-                viewModel.getDataForTheChart(typeOfContent)
-            ) {
-                viewModel.addExpenceOrIncome(
-                    typeOfContent
-                )
+            if ((typeOfContent == TypeOfContentInDashBoardTab.Expences && user.arrayOfExpence.size == 0) ||
+                (typeOfContent == TypeOfContentInDashBoardTab.Incomes && user.arrayOfIncomes.size == 0)){
+                NoInfoScreen(typeOfContent) { viewModel.addExpenceOrIncome(typeOfContent) }
+            }else{
+                InfoScreen(
+                    typeOfContent,
+                    user.arrayOfIncomes,
+                    user.arrayOfExpence,
+                    viewModel.getDataForTheChart(typeOfContent)
+                ) {
+                    viewModel.addExpenceOrIncome(
+                        typeOfContent
+                    )
+                }
             }
+
 
         }
 

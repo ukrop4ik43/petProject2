@@ -61,4 +61,7 @@ class DashBoardTabsViewModel @Inject constructor(
 
     }
 
+    fun setState(state: HomeScreenState) {
+        _screenState.value = state
+    }
 }
