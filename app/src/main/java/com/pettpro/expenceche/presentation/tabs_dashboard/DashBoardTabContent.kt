@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.pettpro.domain.db.model.User
@@ -21,11 +22,11 @@ fun TabContent(
     navController: NavHostController?,
     viewModel: DashBoardTabsViewModel = hiltViewModel()
 ) {
+    val context = LocalContext.current
     val user by viewModel.user.collectAsState()
     val screenState by viewModel.screenState.collectAsState()
     LaunchedEffect(key1 = Unit) {
         viewModel.setState(HomeScreenState.Starting)
-        viewModel.getUserData()
     }
 
 
@@ -35,15 +36,8 @@ fun TabContent(
 
             Log.d("dasdas", "starting")
             LoadingElementOnDashboard { viewModel.addExpenceOrIncome(typeOfContent) }
-            LaunchedEffect(screenState) {
-                viewModel.fetchData(
-                    typeOfContent,
-                    User(
-                        user.id, user.name, user.login, user.password,
-                        user.arrayOfExpence, user.arrayOfIncomes
-                    )
-                )
-            }
+                viewModel.getUserData(typeOfContent)
+
         }
 
         is HomeScreenState.Loading -> {
@@ -59,9 +53,10 @@ fun TabContent(
         is HomeScreenState.ReadyToShow -> {
             Log.d("dasdas", "ready to show,${user.arrayOfIncomes}")
             if ((typeOfContent == TypeOfContentInDashBoardTab.Expences && user.arrayOfExpence.size == 0) ||
-                (typeOfContent == TypeOfContentInDashBoardTab.Incomes && user.arrayOfIncomes.size == 0)){
+                (typeOfContent == TypeOfContentInDashBoardTab.Incomes && user.arrayOfIncomes.size == 0)
+            ) {
                 NoInfoScreen(typeOfContent) { viewModel.addExpenceOrIncome(typeOfContent) }
-            }else{
+            } else {
                 InfoScreen(
                     typeOfContent,
                     user.arrayOfIncomes,

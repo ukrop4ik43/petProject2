@@ -8,6 +8,7 @@ import com.pettpro.domain.home.HomeScreenProvider
 import com.pettpro.domain.usecases.userdb.UserDatabaseUseCases
 import com.pettpro.domain.home.HomeScreenState
 import com.pettpro.domain.home.TypeOfContentInDashBoardTab
+import com.pettpro.domain.registration.FirebaseUsersRegistrationRepository
 import com.pettpro.domain.tabs_dashboard.ChartDataExtractor
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -24,7 +25,8 @@ import javax.inject.Inject
 class DashBoardTabsViewModel @Inject constructor(
     private val userDatabaseUseCases: UserDatabaseUseCases,
     private val homeScreenStateProvider: HomeScreenProvider,
-    private val chartDataExtractor: ChartDataExtractor
+    private val chartDataExtractor: ChartDataExtractor,
+    private val getAllUsersRepository: FirebaseUsersRegistrationRepository,
 ) : ViewModel() {
     private val _screenState = MutableStateFlow<HomeScreenState>(HomeScreenState.Starting)
     val screenState: StateFlow<HomeScreenState> = _screenState.asStateFlow()
@@ -32,16 +34,21 @@ class DashBoardTabsViewModel @Inject constructor(
 
     private val _user = MutableStateFlow(User())
     val user: StateFlow<User> = _user.asStateFlow()
-    fun getUserData() {
+    fun getUserData(typeOfContent: TypeOfContentInDashBoardTab?) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 val gettedUserData = userDatabaseUseCases.getUser()
                 Log.d("dasdas", "getted from database ${gettedUserData}")
                 _user.value = gettedUserData
+                if(typeOfContent!=null){
+                    fetchData(typeOfContent, gettedUserData)
+
+                }
             }
         }
 
     }
+
 
     fun getDataForTheChart(typeOfContent: TypeOfContentInDashBoardTab): Map<String, Int> {
         return if (typeOfContent == TypeOfContentInDashBoardTab.Incomes) {

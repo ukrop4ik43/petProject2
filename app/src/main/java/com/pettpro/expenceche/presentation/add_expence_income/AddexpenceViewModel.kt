@@ -35,7 +35,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AddexpenceViewModel @Inject constructor(
-    private val categoriesMapper:CategoriesMapper,
+    private val categoriesMapper: CategoriesMapper,
     private val addExpenceIncomeVerifyingRepository: AddExpenceIncomeVerifyingRepository,
     private val firebaseUsersRegistrationRepository: FirebaseUsersRegistrationRepository,
     private val toastControl: ToastControl,
@@ -69,20 +69,24 @@ class AddexpenceViewModel @Inject constructor(
             }
 
             is AddExpenceIncomeFormEvent.CategoryExpenceChange -> {
-                state = state.copy(categoryOfExpence = categoriesMapper.setExpenceCaterogy(event.category))
+                state =
+                    state.copy(categoryOfExpence = categoriesMapper.setExpenceCaterogy(event.category))
             }
 
             is AddExpenceIncomeFormEvent.CategoryIncomeChange -> {
 
-                state = state.copy(categoryOfIncome = categoriesMapper.setIncomeCaterogy(event.category))
+                state =
+                    state.copy(categoryOfIncome = categoriesMapper.setIncomeCaterogy(event.category))
             }
-            is AddExpenceIncomeFormEvent.SetTypeOfMoneyFlow ->{
-                if(event.type== TypeOfContentInDashBoardTab.Incomes){
+
+            is AddExpenceIncomeFormEvent.SetTypeOfMoneyFlow -> {
+                if (event.type == TypeOfContentInDashBoardTab.Incomes) {
                     isItIncome = true
-                }else{
+                } else {
                     isItIncome = false
                 }
             }
+
             is AddExpenceIncomeFormEvent.ShowToast -> {
                 toastControl.show(event.text)
             }
@@ -131,7 +135,16 @@ class AddexpenceViewModel @Inject constructor(
             )
             return
         }
-
+        viewModelScope.launch(Dispatchers.IO) {
+            if (isItIncome) {
+                addIncome()
+            } else {
+                addExpence()
+            }
+            userDatabaseUseCases.updateUser(user)
+            Log.d("dsadas", "updated user ${userDatabaseUseCases.getUser()}")
+            firebaseUsersRegistrationRepository.updateUser(user)
+        }
 
         viewModelScope.launch {
             validationEventChannel.send(ValidationEvent.Success)
@@ -139,20 +152,8 @@ class AddexpenceViewModel @Inject constructor(
     }
 
     private fun finalOfSaving() {
-        viewModelScope.launch {
-            if (isItIncome) {
-                addIncome()
-            } else {
-                addExpence()
-            }
-            userDatabaseUseCases.updateUser(user)
-            firebaseUsersRegistrationRepository.updateUser(user)
-        }
+
     }
-
-
-
-
 
 
     sealed class ValidationEvent {
