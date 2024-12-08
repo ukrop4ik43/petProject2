@@ -15,13 +15,17 @@ import androidx.compose.material.TabPosition
 import androidx.compose.material.TabRow
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import com.pettpro.domain.home.HomeScreenState
 import com.pettpro.domain.home.TypeOfContentInDashBoardTab
 import com.pettpro.expenceche.presentation.colors.YellowCustom
 import com.pettpro.expenceche.presentation.colors.blackGradient200
@@ -30,12 +34,25 @@ import kotlinx.coroutines.launch
 @RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun TabForHome(navController: NavHostController?) {
+fun TabForHome(
+    navController: NavHostController?,
+    viewModel: DashBoardTabsViewModel = hiltViewModel()
+) {
     val coroutineScope = rememberCoroutineScope()
     val pagerState = rememberPagerState(
         initialPage = 0, initialPageOffsetFraction = 0f
     ) {
         2
+    }
+    LaunchedEffect(pagerState) {
+        snapshotFlow { pagerState.currentPage }.collect { page ->
+            when (page) {
+                0 ->         viewModel.getUserData(TypeOfContentInDashBoardTab.Expences)
+                1 -> viewModel.getUserData(TypeOfContentInDashBoardTab.Incomes)
+
+            }
+        }
+
     }
     val tabTitles = listOf("Expences", "Incomes")
     TabRow(
@@ -88,8 +105,8 @@ fun TabForHome(navController: NavHostController?) {
         state = pagerState, modifier = Modifier.fillMaxSize()
     ) { page ->
         when (page) {
-            0 -> TabContent(TypeOfContentInDashBoardTab.Expences,navController)
-            1 -> TabContent(TypeOfContentInDashBoardTab.Incomes,navController)
+            0 -> TabContent(TypeOfContentInDashBoardTab.Expences, navController,viewModel)
+            1 -> TabContent(TypeOfContentInDashBoardTab.Incomes, navController, viewModel)
 
         }
     }

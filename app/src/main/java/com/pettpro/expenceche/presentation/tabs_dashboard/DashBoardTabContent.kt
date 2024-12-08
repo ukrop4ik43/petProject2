@@ -7,10 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.platform.LocalContext
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.pettpro.domain.db.model.User
 import com.pettpro.domain.home.HomeScreenState
 import com.pettpro.domain.home.TypeOfContentInDashBoardTab
 import com.pettpro.expenceche.presentation.navigation.NavigationItem
@@ -20,9 +17,9 @@ import com.pettpro.expenceche.presentation.navigation.NavigationItem
 fun TabContent(
     typeOfContent: TypeOfContentInDashBoardTab,
     navController: NavHostController?,
-    viewModel: DashBoardTabsViewModel = hiltViewModel()
-) {
-    val context = LocalContext.current
+    viewModel: DashBoardTabsViewModel,
+
+    ) {
     val user by viewModel.user.collectAsState()
     val screenState by viewModel.screenState.collectAsState()
     LaunchedEffect(key1 = Unit) {

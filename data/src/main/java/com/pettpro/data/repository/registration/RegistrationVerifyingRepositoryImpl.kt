@@ -38,7 +38,7 @@ class RegistrationVerifyingRepositoryImpl @Inject constructor() : RegistrationVe
         if (password.isEmpty()) {
             return RegistrationValidationResults(false, "Password is empty")
         }
-        if (password.any { it.isDigit() } && password.any { it.isLetter() }) {
+        if (!password.any { it.isDigit() } || !password.any { it.isLetter() }) {
             return RegistrationValidationResults(
                 false,
                 "Password should contain letters and digits"
