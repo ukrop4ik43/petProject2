@@ -1,4 +1,4 @@
-package com.pettpro.expenceche.presentation.welcome
+package com.pettpro.expenceche.presentation.welcome.model
 
 import androidx.annotation.DrawableRes
 import com.pettpro.expenceche.R
@@ -28,3 +28,10 @@ sealed class OnBoardingPage(
         description = "Hope this app will help you in your financial adventure!Good luck!"
     )
 }
+
+val welcomeScreenPages = listOf(
+    OnBoardingPage.First,
+    OnBoardingPage.Second,
+    OnBoardingPage.Third,
+    OnBoardingPage.Fourth
+)

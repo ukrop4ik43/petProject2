@@ -40,7 +40,6 @@ fun PieChart(
     chartBarWidth: Dp = 20.dp,
     animDuration: Int = 1000,
 ) {
-    Log.d("chartData", data.toString())
     val totalSum = data.values.sum()
     val floatValue = mutableListOf<Float>()
 
@@ -107,9 +106,7 @@ fun PieChart(
             data = data,
             colors = colorsOfCategories
         )
-
     }
-
 }
 
 @Composable
@@ -129,7 +126,6 @@ fun DetailsPieChart(
                 color = colors[index]
             )
         }
-
     }
 }
 
@@ -139,7 +135,6 @@ fun DetailsPieChartItem(
     height: Dp = 30.dp,
     color: Color
 ) {
-
     Surface(
         modifier = Modifier
             .padding(end = 20.dp),
@@ -176,9 +171,6 @@ fun DetailsPieChartItem(
                     color = Color.DarkGray
                 )
             }
-
         }
-
     }
-
 }

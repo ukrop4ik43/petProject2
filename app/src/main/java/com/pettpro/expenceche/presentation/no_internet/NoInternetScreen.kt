@@ -70,7 +70,6 @@ fun NoInternetScreen(navController: NavHostController?) {
                 textAlign = TextAlign.Center,
                 color = Color.DarkGray
             )
-
         )
     }
 }

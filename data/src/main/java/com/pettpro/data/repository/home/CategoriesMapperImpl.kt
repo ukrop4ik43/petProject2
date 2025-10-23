@@ -1,11 +1,11 @@
 package com.pettpro.data.repository.home
 
-import com.pettpro.domain.db.model.CategoryOfExpence
-import com.pettpro.domain.db.model.CategoryOfIncome
+import com.pettpro.domain.add_expence_income.model.CategoryOfExpence
+import com.pettpro.domain.add_expence_income.model.CategoryOfIncome
 import com.pettpro.domain.home.CategoriesMapper
 
 class CategoriesMapperImpl:CategoriesMapper {
-    override  fun setIncomeCaterogy(category: String): CategoryOfIncome {
+    override  fun setIncomeCategory(category: String): CategoryOfIncome {
         when (category) {
             "P2P"
             -> return CategoryOfIncome.P2P
@@ -19,7 +19,7 @@ class CategoriesMapperImpl:CategoriesMapper {
         return CategoryOfIncome.Other
     }
 
-    override  fun setExpenceCaterogy(category: String): CategoryOfExpence {
+    override  fun setExpenceCategory(category: String): CategoryOfExpence {
         when (category) {
             "Grocery"
             -> return CategoryOfExpence.Grocery

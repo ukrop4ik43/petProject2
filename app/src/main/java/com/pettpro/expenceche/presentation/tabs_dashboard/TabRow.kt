@@ -49,7 +49,6 @@ fun TabForHome(
             when (page) {
                 0 ->         viewModel.getUserData(TypeOfContentInDashBoardTab.Expences)
                 1 -> viewModel.getUserData(TypeOfContentInDashBoardTab.Incomes)
-
             }
         }
 

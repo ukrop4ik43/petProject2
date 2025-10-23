@@ -3,8 +3,8 @@ package com.pettpro.data.repository.db.converter
 import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.pettpro.domain.db.model.CategoryOfExpence
-import com.pettpro.domain.db.model.CategoryOfIncome
+import com.pettpro.domain.add_expence_income.model.CategoryOfExpence
+import com.pettpro.domain.add_expence_income.model.CategoryOfIncome
 import com.pettpro.domain.db.model.Expence
 import com.pettpro.domain.db.model.Income
 

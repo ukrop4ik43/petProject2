@@ -3,4 +3,11 @@
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel target="17" />
   </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="Expence_Checker.domain" options="-proc:none" />
+      <module name="Expence_Checker.domain.main" options="-proc:none" />
+      <module name="Expence_Checker.domain.test" options="-proc:none" />
+    </option>
+  </component>
 </project>

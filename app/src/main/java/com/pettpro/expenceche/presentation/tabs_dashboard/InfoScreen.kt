@@ -20,7 +20,6 @@ import com.pettpro.domain.db.model.Income
 import com.pettpro.domain.home.TypeOfContentInDashBoardTab
 import com.pettpro.expenceche.presentation.home.custom_view.ViewOfExpence
 import com.pettpro.expenceche.presentation.home.custom_view.ViewOfIncome
-import java.lang.reflect.Type
 
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -30,7 +29,7 @@ fun InfoScreen(
     arrayListOfIncome: ArrayList<Income>,
     arrayListOfExpence: ArrayList<Expence>,
     dataForTheChart: Map<String, Int>,
-    onClick: () -> Unit
+    onButtonClick: () -> Unit
 ) {
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.TopCenter) {
         Column(
@@ -59,7 +58,7 @@ fun InfoScreen(
                 .align(Alignment.BottomEnd)
                 .padding(12.dp)
         ) {
-            onClick()
+            onButtonClick()
         }
     }
 

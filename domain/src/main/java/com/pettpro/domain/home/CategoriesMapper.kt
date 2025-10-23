@@ -1,10 +1,11 @@
 package com.pettpro.domain.home
 
-import com.pettpro.domain.db.model.CategoryOfExpence
-import com.pettpro.domain.db.model.CategoryOfIncome
+import com.pettpro.domain.add_expence_income.model.CategoryOfExpence
+import com.pettpro.domain.add_expence_income.model.CategoryOfIncome
+
 
 interface CategoriesMapper {
 
-    fun setIncomeCaterogy(category: String): CategoryOfIncome
-    fun setExpenceCaterogy(category: String): CategoryOfExpence
+    fun setIncomeCategory(category: String): CategoryOfIncome
+    fun setExpenceCategory(category: String): CategoryOfExpence
 }

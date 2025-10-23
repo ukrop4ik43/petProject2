@@ -26,31 +26,24 @@ fun TabContent(
         viewModel.setState(HomeScreenState.Starting)
     }
 
-
-
     when (screenState) {
         is HomeScreenState.Starting -> {
 
-            Log.d("dasdas", "starting")
             LoadingElementOnDashboard { viewModel.addExpenceOrIncome(typeOfContent) }
                 viewModel.getUserData(typeOfContent)
-
         }
 
         is HomeScreenState.Loading -> {
-            Log.d("dasdas", "loading")
             LoadingElementOnDashboard { viewModel.addExpenceOrIncome(typeOfContent) }
         }
 
         is HomeScreenState.NoInfo -> {
-            Log.d("dasdas", "no info")
             NoInfoScreen(typeOfContent) { viewModel.addExpenceOrIncome(typeOfContent) }
         }
 
         is HomeScreenState.ReadyToShow -> {
-            Log.d("dasdas", "ready to show,${user.arrayOfIncomes}")
-            if ((typeOfContent == TypeOfContentInDashBoardTab.Expences && user.arrayOfExpence.size == 0) ||
-                (typeOfContent == TypeOfContentInDashBoardTab.Incomes && user.arrayOfIncomes.size == 0)
+            if ((typeOfContent == TypeOfContentInDashBoardTab.Expences && user.arrayOfExpence.isEmpty()) ||
+                (typeOfContent == TypeOfContentInDashBoardTab.Incomes && user.arrayOfIncomes.isEmpty())
             ) {
                 NoInfoScreen(typeOfContent) { viewModel.addExpenceOrIncome(typeOfContent) }
             } else {
@@ -65,8 +58,6 @@ fun TabContent(
                     )
                 }
             }
-
-
         }
 
         is HomeScreenState.AddUser -> {

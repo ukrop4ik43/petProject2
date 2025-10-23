@@ -1,6 +1,5 @@
 package com.pettpro.expenceche.presentation.add_expence_income
 
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -8,22 +7,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.pettpro.domain.add_expence_income.ActualTimeRepository
 import com.pettpro.domain.add_expence_income.AddExpenceIncomeVerifyingRepository
-import com.pettpro.domain.db.model.CategoryOfExpence
-import com.pettpro.domain.db.model.CategoryOfIncome
 import com.pettpro.domain.db.model.Expence
 import com.pettpro.domain.db.model.Income
-import com.pettpro.domain.db.model.User
 import com.pettpro.domain.home.CategoriesMapper
 import com.pettpro.domain.home.TypeOfContentInDashBoardTab
-import com.pettpro.domain.login.LoginVerifyingRepository
 import com.pettpro.domain.registration.FirebaseUsersRegistrationRepository
 import com.pettpro.domain.registration.ToastControl
 import com.pettpro.domain.usecases.userdb.UserDatabaseUseCases
-import com.pettpro.expenceche.presentation.add_expence_income.model.AddExpenceDataState
-import com.pettpro.expenceche.presentation.add_expence_income.model.AddExpenceIncomeFormEvent
-import com.pettpro.expenceche.presentation.login.LoginViewModel
-import com.pettpro.expenceche.presentation.login.model.LoginDataState
-import com.pettpro.expenceche.presentation.login.model.LoginFormEvent
+import com.pettpro.expenceche.presentation.add_expence_income.model.AddExpenceState
+import com.pettpro.expenceche.presentation.add_expence_income.model.AddExpenceIncomeEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
@@ -43,43 +35,37 @@ class AddexpenceViewModel @Inject constructor(
     private val actualTimeRepository: ActualTimeRepository,
 ) : ViewModel() {
     private var isItIncome = false
-    var state by mutableStateOf(AddExpenceDataState())
-    var user by mutableStateOf(User())
+    var state by mutableStateOf(AddExpenceState())
 
     private val validationEventChannel = Channel<ValidationEvent>()
     val validationEvents = validationEventChannel.receiveAsFlow()
 
-    init {
-        Log.d("dfasfds", actualTimeRepository.getActualTime())
-    }
-
 
     //its necessary to call this block code in custom function,not in init{}
     suspend fun initViewModel() {
-        withContext(Dispatchers.Default) {
-            user = userDatabaseUseCases.getUser()
+        withContext(Dispatchers.IO) {
+            state = state.copy(user = userDatabaseUseCases.getUser())
         }
-        Log.d("adsfsadfsa", user.toString())
     }
 
-    fun onEvent(event: AddExpenceIncomeFormEvent) {
+    fun onEvent(event: AddExpenceIncomeEvent) {
         when (event) {
-            is AddExpenceIncomeFormEvent.AmountChange -> {
+            is AddExpenceIncomeEvent.AmountChange -> {
                 state = state.copy(amount = event.amount)
             }
 
-            is AddExpenceIncomeFormEvent.CategoryExpenceChange -> {
+            is AddExpenceIncomeEvent.CategoryExpenceChange -> {
                 state =
-                    state.copy(categoryOfExpence = categoriesMapper.setExpenceCaterogy(event.category))
+                    state.copy(categoryOfExpence = categoriesMapper.setExpenceCategory(event.category))
             }
 
-            is AddExpenceIncomeFormEvent.CategoryIncomeChange -> {
+            is AddExpenceIncomeEvent.CategoryIncomeChange -> {
 
                 state =
-                    state.copy(categoryOfIncome = categoriesMapper.setIncomeCaterogy(event.category))
+                    state.copy(categoryOfIncome = categoriesMapper.setIncomeCategory(event.category))
             }
 
-            is AddExpenceIncomeFormEvent.SetTypeOfMoneyFlow -> {
+            is AddExpenceIncomeEvent.SetTypeOfMoneyFlow -> {
                 if (event.type == TypeOfContentInDashBoardTab.Incomes) {
                     isItIncome = true
                 } else {
@@ -87,15 +73,15 @@ class AddexpenceViewModel @Inject constructor(
                 }
             }
 
-            is AddExpenceIncomeFormEvent.ShowToast -> {
+            is AddExpenceIncomeEvent.ShowToast -> {
                 toastControl.show(event.text)
             }
 
-            is AddExpenceIncomeFormEvent.Sumbit -> {
+            is AddExpenceIncomeEvent.Submit -> {
                 submitData()
             }
 
-            is AddExpenceIncomeFormEvent.Final -> {
+            is AddExpenceIncomeEvent.Final -> {
                 finalOfSaving()
             }
 
@@ -103,25 +89,30 @@ class AddexpenceViewModel @Inject constructor(
     }
 
     private fun addIncome() {
-        user.arrayOfIncomes.add(
+        val newUser = state.user
+        newUser.arrayOfIncomes.add(
             Income(
-                (user.arrayOfIncomes.size).toString(),
+                (state.user.arrayOfIncomes.size).toString(),
                 actualTimeRepository.getActualTime(),
                 state.amount.toDouble(),
                 state.categoryOfIncome!!.toString()
             )
         )
+
+        state = state.copy(user = newUser)
     }
 
     private fun addExpence() {
-        user.arrayOfExpence.add(
+        val newUser = state.user
+        newUser.arrayOfExpence.add(
             Expence(
-                (user.arrayOfExpence.size).toString(),
+                (state.user.arrayOfExpence.size).toString(),
                 actualTimeRepository.getActualTime(),
                 state.amount.toDouble(),
                 state.categoryOfExpence!!.toString()
             )
         )
+        state = state.copy(user = newUser)
     }
 
     private fun submitData() {
@@ -141,9 +132,8 @@ class AddexpenceViewModel @Inject constructor(
             } else {
                 addExpence()
             }
-            userDatabaseUseCases.updateUser(user)
-            Log.d("dsadas", "updated user ${userDatabaseUseCases.getUser()}")
-            firebaseUsersRegistrationRepository.updateUser(user)
+            userDatabaseUseCases.updateUser(state.user)
+            firebaseUsersRegistrationRepository.updateUser(state.user)
         }
 
         viewModelScope.launch {

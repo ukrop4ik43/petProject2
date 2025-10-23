@@ -26,7 +26,6 @@ class DashBoardTabsViewModel @Inject constructor(
     private val userDatabaseUseCases: UserDatabaseUseCases,
     private val homeScreenStateProvider: HomeScreenProvider,
     private val chartDataExtractor: ChartDataExtractor,
-    private val getAllUsersRepository: FirebaseUsersRegistrationRepository,
 ) : ViewModel() {
     private val _screenState = MutableStateFlow<HomeScreenState>(HomeScreenState.Starting)
     val screenState: StateFlow<HomeScreenState> = _screenState.asStateFlow()
@@ -38,7 +37,6 @@ class DashBoardTabsViewModel @Inject constructor(
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 val gettedUserData = userDatabaseUseCases.getUser()
-                Log.d("dasdas", "getted from database ${gettedUserData}")
                 _user.value = gettedUserData
                 if(typeOfContent!=null){
                     fetchData(typeOfContent, gettedUserData)
@@ -59,7 +57,6 @@ class DashBoardTabsViewModel @Inject constructor(
     }
 
     fun fetchData(typeOfContent: TypeOfContentInDashBoardTab, user: User) {
-        Log.d("dasdas", "fetch data,type of content ${typeOfContent} , user ${user}")
         _screenState.value = homeScreenStateProvider.getStateOfHomeScreen(typeOfContent, user)
     }
 

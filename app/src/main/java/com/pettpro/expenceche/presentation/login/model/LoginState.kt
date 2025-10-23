@@ -1,6 +1,6 @@
 package com.pettpro.expenceche.presentation.login.model
 
-data class LoginDataState(
+data class LoginState(
     val login:String="",
     val loginError:String? =null,
     val password:String="",

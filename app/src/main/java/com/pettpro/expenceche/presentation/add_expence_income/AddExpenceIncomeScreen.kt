@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -21,10 +20,7 @@ import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.Alignment.Companion.End
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -39,14 +35,11 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.pettpro.domain.home.TypeOfContentInDashBoardTab
 import com.pettpro.expenceche.R
-import com.pettpro.expenceche.presentation.add_expence_income.model.AddExpenceDataState
-import com.pettpro.expenceche.presentation.add_expence_income.model.AddExpenceIncomeFormEvent
+import com.pettpro.expenceche.presentation.add_expence_income.model.AddExpenceIncomeEvent
 import com.pettpro.expenceche.presentation.colors.DarkGrey200
 import com.pettpro.expenceche.presentation.colors.YellowCustomSecond
 import com.pettpro.expenceche.presentation.colors.blackGradient200
 import com.pettpro.expenceche.presentation.colors.yellowBackgroundBrush
-import com.pettpro.expenceche.presentation.login.LoginViewModel
-import com.pettpro.expenceche.presentation.login.model.LoginFormEvent
 import com.pettpro.expenceche.presentation.navigation.NavigationItem
 
 @Composable
@@ -64,8 +57,8 @@ fun AddExpenceIncomeScreen(
         viewModel.validationEvents.collect { event ->
             when (event) {
                 is AddexpenceViewModel.ValidationEvent.Success -> {
-                    viewModel.onEvent(AddExpenceIncomeFormEvent.Final)
-                    viewModel.onEvent(AddExpenceIncomeFormEvent.ShowToast("Successfully Added"))
+                    viewModel.onEvent(AddExpenceIncomeEvent.Final)
+                    viewModel.onEvent(AddExpenceIncomeEvent.ShowToast("Successfully Added"))
                     navController?.navigate(NavigationItem.Home.route)
                 }
             }
@@ -126,7 +119,7 @@ fun AddExpenceIncomeScreen(
             keyboardActions = KeyboardActions(
                 onDone = {
                     viewModel.onEvent(
-                        AddExpenceIncomeFormEvent.Sumbit
+                        AddExpenceIncomeEvent.Submit
                     )
                 }
             ),
@@ -141,7 +134,7 @@ fun AddExpenceIncomeScreen(
             },
             textStyle = TextStyle.Default.copy(fontSize = 28.sp, textAlign = TextAlign.Start),
             onValueChange = {
-                viewModel.onEvent(AddExpenceIncomeFormEvent.AmountChange(it))
+                viewModel.onEvent(AddExpenceIncomeEvent.AmountChange(it))
             }, colors = TextFieldDefaults.textFieldColors(
                 cursorColor = Color.Black,
                 focusedIndicatorColor = Color.Transparent,
@@ -154,10 +147,10 @@ fun AddExpenceIncomeScreen(
         ) {
             SubmitButton {
                 if (state.amountError != null) {
-                    viewModel.onEvent(AddExpenceIncomeFormEvent.ShowToast(state.amountError))
+                    viewModel.onEvent(AddExpenceIncomeEvent.ShowToast(state.amountError))
                 }
                 viewModel.onEvent(
-                    AddExpenceIncomeFormEvent.Sumbit
+                    AddExpenceIncomeEvent.Submit
                 )
             }
         }
