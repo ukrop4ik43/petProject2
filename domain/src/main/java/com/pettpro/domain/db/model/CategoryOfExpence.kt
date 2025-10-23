@@ -10,6 +10,20 @@ sealed interface CategoryOfExpence {
     data object Entertainment : CategoryOfExpence
 
     data object Other : CategoryOfExpence
-
-
 }
+
+val categoryOfExpence = mutableListOf(
+    CategoryOfExpence.Grocery,
+    CategoryOfExpence.Electronic,
+    CategoryOfExpence.Healthcare,
+    CategoryOfExpence.Transport,
+    CategoryOfExpence.Restaurants,
+    CategoryOfExpence.Entertainment,
+    CategoryOfExpence.Other
+)
+val categoryOfIncome =
+    mutableListOf(
+        CategoryOfIncome.P2P,
+        CategoryOfIncome.Replenishment,
+        CategoryOfIncome.Other
+    )

@@ -42,6 +42,8 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.unit.toSize
 import com.pettpro.domain.db.model.CategoryOfExpence
 import com.pettpro.domain.db.model.CategoryOfIncome
+import com.pettpro.domain.db.model.categoryOfExpence
+import com.pettpro.domain.db.model.categoryOfIncome
 import com.pettpro.domain.home.TypeOfContentInDashBoardTab
 import com.pettpro.expenceche.presentation.add_expence_income.model.AddExpenceIncomeFormEvent
 import com.pettpro.expenceche.presentation.colors.YellowCustom
@@ -55,22 +57,6 @@ fun DropDownMenu(
     viewModel: AddexpenceViewModel
 ) {
     var textfieldSize by remember { mutableStateOf(Size.Zero) }
-
-    val categoryOfExpence = mutableListOf(
-        CategoryOfExpence.Grocery,
-        CategoryOfExpence.Electronic,
-        CategoryOfExpence.Healthcare,
-        CategoryOfExpence.Transport,
-        CategoryOfExpence.Restaurants,
-        CategoryOfExpence.Entertainment,
-        CategoryOfExpence.Other
-    )
-    val categoryOfIncome =
-        mutableListOf(
-            CategoryOfIncome.P2P,
-            CategoryOfIncome.Replenishment,
-            CategoryOfIncome.Other
-        )
     var expanded by remember { mutableStateOf(false) }
     var selectedText by remember {
         mutableStateOf(
@@ -110,7 +96,6 @@ fun DropDownMenu(
                     textAlign = TextAlign.Start
                 ),
                 onValueChange = {
-                    Log.d("chartData", "changing category $it")
                     if (typeOfContentInDashBoardTab == TypeOfContentInDashBoardTab.Incomes) {
                         viewModel.onEvent(AddExpenceIncomeFormEvent.CategoryIncomeChange(it))
                     } else {
@@ -157,7 +142,6 @@ fun DropDownMenu(
                                         )
                                     )
 
-                                    Log.d("chartData", "incomee clicked")
                                     selectedText = item.toString()
                                     expanded = false
                                 }
@@ -176,7 +160,6 @@ fun DropDownMenu(
                                             item.toString()
                                         )
                                     )
-                                    Log.d("chartData", "expence clicked")
                                     selectedText = item.toString()
                                     expanded = false
                                 }

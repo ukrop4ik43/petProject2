@@ -73,14 +73,6 @@ class LoginViewModel @Inject constructor(
 
     suspend fun saveUserToDb() {
         userDatabaseUseCases.deleteUser()
-        Log.d(
-            "dasdas", "saved ${
-                loginVerifyingRepository.getActualUserToSave(
-                    state.login,
-                    userList
-                )
-            } "
-        )
         userDatabaseUseCases.saveUser(
             loginVerifyingRepository.getActualUserToSave(
                 state.login,
@@ -90,26 +82,13 @@ class LoginViewModel @Inject constructor(
     }
 
     suspend fun updateUserInDb() {
-        Log.d(
-            "dasdas", "saved ${
-                loginVerifyingRepository.getActualUserToSave(
-                    state.login,
-                    userList
-                )
-            } "
-        )
+
         userDatabaseUseCases.updateUser(
             loginVerifyingRepository.getActualUserToSave(
                 state.login,
                 userList
             )
         )
-        viewModelScope.launch(Dispatchers.IO) {
-            Log.d(
-                "dasdas", "getteduser ${userDatabaseUseCases.getUser()} "
-            )
-        }
-
     }
 
     private fun submitData() {

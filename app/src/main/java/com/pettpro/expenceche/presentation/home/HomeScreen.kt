@@ -40,13 +40,6 @@ import kotlinx.coroutines.withContext
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun HomeScreen(navController: NavHostController?, viewModel: HomeViewModel = hiltViewModel()) {
-    LaunchedEffect(Unit) {
-        launch(Dispatchers.IO) {
-            Log.d("dassa", viewModel.getUser().toString())
-
-        }
-
-    }
     Column(
         modifier = Modifier
             .fillMaxSize()

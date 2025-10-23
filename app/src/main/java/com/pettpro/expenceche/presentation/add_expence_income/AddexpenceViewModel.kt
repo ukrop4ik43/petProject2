@@ -8,22 +8,16 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.pettpro.domain.add_expence_income.ActualTimeRepository
 import com.pettpro.domain.add_expence_income.AddExpenceIncomeVerifyingRepository
-import com.pettpro.domain.db.model.CategoryOfExpence
-import com.pettpro.domain.db.model.CategoryOfIncome
 import com.pettpro.domain.db.model.Expence
 import com.pettpro.domain.db.model.Income
 import com.pettpro.domain.db.model.User
 import com.pettpro.domain.home.CategoriesMapper
 import com.pettpro.domain.home.TypeOfContentInDashBoardTab
-import com.pettpro.domain.login.LoginVerifyingRepository
 import com.pettpro.domain.registration.FirebaseUsersRegistrationRepository
 import com.pettpro.domain.registration.ToastControl
 import com.pettpro.domain.usecases.userdb.UserDatabaseUseCases
 import com.pettpro.expenceche.presentation.add_expence_income.model.AddExpenceDataState
 import com.pettpro.expenceche.presentation.add_expence_income.model.AddExpenceIncomeFormEvent
-import com.pettpro.expenceche.presentation.login.LoginViewModel
-import com.pettpro.expenceche.presentation.login.model.LoginDataState
-import com.pettpro.expenceche.presentation.login.model.LoginFormEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
@@ -49,9 +43,6 @@ class AddexpenceViewModel @Inject constructor(
     private val validationEventChannel = Channel<ValidationEvent>()
     val validationEvents = validationEventChannel.receiveAsFlow()
 
-    init {
-        Log.d("dfasfds", actualTimeRepository.getActualTime())
-    }
 
 
     //its necessary to call this block code in custom function,not in init{}
@@ -59,7 +50,6 @@ class AddexpenceViewModel @Inject constructor(
         withContext(Dispatchers.Default) {
             user = userDatabaseUseCases.getUser()
         }
-        Log.d("adsfsadfsa", user.toString())
     }
 
     fun onEvent(event: AddExpenceIncomeFormEvent) {
@@ -91,7 +81,7 @@ class AddexpenceViewModel @Inject constructor(
                 toastControl.show(event.text)
             }
 
-            is AddExpenceIncomeFormEvent.Sumbit -> {
+            is AddExpenceIncomeFormEvent.Submit -> {
                 submitData()
             }
 
@@ -142,7 +132,6 @@ class AddexpenceViewModel @Inject constructor(
                 addExpence()
             }
             userDatabaseUseCases.updateUser(user)
-            Log.d("dsadas", "updated user ${userDatabaseUseCases.getUser()}")
             firebaseUsersRegistrationRepository.updateUser(user)
         }
 

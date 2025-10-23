@@ -40,7 +40,6 @@ fun PieChart(
     chartBarWidth: Dp = 20.dp,
     animDuration: Int = 1000,
 ) {
-    Log.d("chartData", data.toString())
     val totalSum = data.values.sum()
     val floatValue = mutableListOf<Float>()
 
