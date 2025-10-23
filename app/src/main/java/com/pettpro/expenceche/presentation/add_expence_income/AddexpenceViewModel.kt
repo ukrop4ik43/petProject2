@@ -9,7 +9,6 @@ import com.pettpro.domain.add_expence_income.ActualTimeRepository
 import com.pettpro.domain.add_expence_income.AddExpenceIncomeVerifyingRepository
 import com.pettpro.domain.db.model.Expence
 import com.pettpro.domain.db.model.Income
-import com.pettpro.domain.db.model.User
 import com.pettpro.domain.home.CategoriesMapper
 import com.pettpro.domain.home.TypeOfContentInDashBoardTab
 import com.pettpro.domain.registration.FirebaseUsersRegistrationRepository
@@ -57,13 +56,13 @@ class AddexpenceViewModel @Inject constructor(
 
             is AddExpenceIncomeEvent.CategoryExpenceChange -> {
                 state =
-                    state.copy(categoryOfExpence = categoriesMapper.setExpenceCaterogy(event.category))
+                    state.copy(categoryOfExpence = categoriesMapper.setExpenceCategory(event.category))
             }
 
             is AddExpenceIncomeEvent.CategoryIncomeChange -> {
 
                 state =
-                    state.copy(categoryOfIncome = categoriesMapper.setIncomeCaterogy(event.category))
+                    state.copy(categoryOfIncome = categoriesMapper.setIncomeCategory(event.category))
             }
 
             is AddExpenceIncomeEvent.SetTypeOfMoneyFlow -> {

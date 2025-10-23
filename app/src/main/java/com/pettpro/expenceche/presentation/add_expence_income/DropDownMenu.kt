@@ -35,8 +35,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.unit.toSize
-import com.pettpro.expenceche.presentation.models.categoryOfExpence
-import com.pettpro.expenceche.presentation.models.categoryOfIncome
+import com.pettpro.domain.add_expence_income.model.categoryOfExpence
+import com.pettpro.domain.add_expence_income.model.categoryOfIncome
 import com.pettpro.domain.home.TypeOfContentInDashBoardTab
 import com.pettpro.expenceche.presentation.add_expence_income.model.AddExpenceIncomeEvent
 import com.pettpro.expenceche.presentation.colors.YellowCustom

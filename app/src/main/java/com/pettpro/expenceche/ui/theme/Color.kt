@@ -1,6 +1,7 @@
 package com.pettpro.expenceche.ui.theme
 
 import androidx.compose.ui.graphics.Color
+import com.pettpro.expenceche.presentation.colors.colorsOfCategories
 
 val Purple80 = Color(0xFFD0BCFF)
 val PurpleGrey80 = Color(0xFFCCC2DC)

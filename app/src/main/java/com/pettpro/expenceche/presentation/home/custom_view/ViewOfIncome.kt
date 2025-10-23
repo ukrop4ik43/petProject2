@@ -21,10 +21,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.pettpro.expenceche.presentation.models.CategoryOfIncome
 import com.pettpro.domain.db.model.Income
 import com.pettpro.expenceche.presentation.colors.DarkGrey200
-import com.pettpro.expenceche.presentation.colors.colorsOfCategories
+import com.pettpro.expenceche.presentation.util.toColor
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -51,7 +50,7 @@ fun ViewOfIncome(income: Income, viewModel: ViewExpenceIncomeViewModel = hiltVie
                 modifier = Modifier
                     .padding(start = 10.dp)
                     .background(
-                        color = category.color, shape = RoundedCornerShape(10.dp)
+                        color = category.toColor(), shape = RoundedCornerShape(10.dp)
                     )
                     .size(30.dp)
             )

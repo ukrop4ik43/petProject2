@@ -16,6 +16,4 @@ class ActualTimeRepositoryImpl @Inject constructor() :
     override fun getActualTime(): String {
         return SimpleDateFormat("yyyy-MM-dd  HH:mm", Locale.getDefault()).format(Date())
     }
-
-
 }
