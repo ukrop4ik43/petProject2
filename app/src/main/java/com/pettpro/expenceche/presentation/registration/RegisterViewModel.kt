@@ -10,8 +10,8 @@ import com.pettpro.domain.db.model.User
 import com.pettpro.domain.registration.FirebaseUsersRegistrationRepository
 import com.pettpro.domain.registration.RegistrationVerifyingRepository
 import com.pettpro.domain.registration.ToastControl
-import com.pettpro.expenceche.presentation.registration.model.RegisterDataState
-import com.pettpro.expenceche.presentation.registration.model.RegistrationFormEvent
+import com.pettpro.expenceche.presentation.registration.model.RegisterState
+import com.pettpro.expenceche.presentation.registration.model.RegistrationEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
@@ -27,7 +27,7 @@ class RegisterViewModel @Inject constructor(
     @SuppressLint("MutableCollectionMutableState")
     var userList: MutableList<User> = mutableListOf()
 
-    var state by mutableStateOf(RegisterDataState())
+    var state by mutableStateOf(RegisterState())
     private val validationEventChannel = Channel<ValidationEvent>()
     val validationEvents = validationEventChannel.receiveAsFlow()
 
@@ -37,32 +37,32 @@ class RegisterViewModel @Inject constructor(
         }
     }
 
-    fun onEvent(event: RegistrationFormEvent) {
+    fun onEvent(event: RegistrationEvent) {
         when (event) {
-            is RegistrationFormEvent.LoginChange -> {
+            is RegistrationEvent.LoginChange -> {
                 state = state.copy(login = event.login)
             }
-            is RegistrationFormEvent.PasswordChange -> {
+            is RegistrationEvent.PasswordChange -> {
                 state = state.copy(password = event.password)
             }
 
-            is RegistrationFormEvent.PasswordRepeatChange -> {
+            is RegistrationEvent.PasswordRepeatChange -> {
                 state = state.copy(secondPassword = event.passwordRepeat)
             }
 
-            is RegistrationFormEvent.NameChange -> {
+            is RegistrationEvent.NameChange -> {
                 state = state.copy(name = event.name)
             }
 
-            is RegistrationFormEvent.ShowToast -> {
+            is RegistrationEvent.ShowToast -> {
                 toastControl.show(event.text)
             }
 
-            is RegistrationFormEvent.Sumbit -> {
+            is RegistrationEvent.Sumbit -> {
                 submitData()
             }
 
-            is RegistrationFormEvent.AddUser -> {
+            is RegistrationEvent.AddUser -> {
                 firebaseUsersRepository.addUser(
                     User("",
                         state.name, state.login, state.password,

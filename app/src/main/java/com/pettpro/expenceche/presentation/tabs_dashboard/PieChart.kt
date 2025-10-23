@@ -106,9 +106,7 @@ fun PieChart(
             data = data,
             colors = colorsOfCategories
         )
-
     }
-
 }
 
 @Composable
@@ -128,7 +126,6 @@ fun DetailsPieChart(
                 color = colors[index]
             )
         }
-
     }
 }
 
@@ -138,7 +135,6 @@ fun DetailsPieChartItem(
     height: Dp = 30.dp,
     color: Color
 ) {
-
     Surface(
         modifier = Modifier
             .padding(end = 20.dp),
@@ -175,9 +171,6 @@ fun DetailsPieChartItem(
                     color = Color.DarkGray
                 )
             }
-
         }
-
     }
-
 }

@@ -2,7 +2,6 @@ package com.pettpro.expenceche.presentation.login
 
 
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -14,10 +13,9 @@ import com.pettpro.domain.no_internet.ConnectionCheckRepository
 import com.pettpro.domain.registration.FirebaseUsersRegistrationRepository
 import com.pettpro.domain.registration.ToastControl
 import com.pettpro.domain.usecases.userdb.UserDatabaseUseCases
-import com.pettpro.expenceche.presentation.login.model.LoginDataState
-import com.pettpro.expenceche.presentation.login.model.LoginFormEvent
+import com.pettpro.expenceche.presentation.login.model.LoginState
+import com.pettpro.expenceche.presentation.login.model.LoginEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
@@ -34,7 +32,7 @@ class LoginViewModel @Inject constructor(
     @SuppressLint("MutableCollectionMutableState")
     var userList: MutableList<User> = mutableListOf()
 
-    var state by mutableStateOf(LoginDataState())
+    var state by mutableStateOf(LoginState())
     private val validationEventChannel = Channel<ValidationEvent>()
     val validationEvents = validationEventChannel.receiveAsFlow()
 
@@ -44,25 +42,25 @@ class LoginViewModel @Inject constructor(
         }
     }
 
-    fun onEvent(event: LoginFormEvent) {
+    fun onEvent(event: LoginEvent) {
         when (event) {
-            is LoginFormEvent.LoginChange -> {
+            is LoginEvent.LoginChange -> {
                 state = state.copy(login = event.login)
             }
 
-            is LoginFormEvent.PasswordChange -> {
+            is LoginEvent.PasswordChange -> {
                 state = state.copy(password = event.password)
             }
 
-            is LoginFormEvent.ShowToast -> {
+            is LoginEvent.ShowToast -> {
                 toastControl.show(event.text)
             }
 
-            is LoginFormEvent.Sumbit -> {
+            is LoginEvent.Sumbit -> {
                 submitData()
             }
 
-            LoginFormEvent.NoConnection -> {
+            LoginEvent.NoConnection -> {
 
             }
         }

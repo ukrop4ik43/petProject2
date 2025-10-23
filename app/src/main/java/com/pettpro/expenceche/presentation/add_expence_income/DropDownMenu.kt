@@ -1,7 +1,5 @@
 package com.pettpro.expenceche.presentation.add_expence_income
 
-import android.util.Log
-import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -18,10 +16,8 @@ import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.TextField
 
-import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.LocalTextStyle
-import androidx.compose.material3.TextFieldColors
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -33,21 +29,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onGloballyPositioned
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.unit.toSize
-import com.pettpro.domain.db.model.CategoryOfExpence
-import com.pettpro.domain.db.model.CategoryOfIncome
-import com.pettpro.domain.db.model.categoryOfExpence
-import com.pettpro.domain.db.model.categoryOfIncome
+import com.pettpro.expenceche.presentation.models.categoryOfExpence
+import com.pettpro.expenceche.presentation.models.categoryOfIncome
 import com.pettpro.domain.home.TypeOfContentInDashBoardTab
-import com.pettpro.expenceche.presentation.add_expence_income.model.AddExpenceIncomeFormEvent
+import com.pettpro.expenceche.presentation.add_expence_income.model.AddExpenceIncomeEvent
 import com.pettpro.expenceche.presentation.colors.YellowCustom
-import com.pettpro.expenceche.presentation.colors.YellowCustomSecond
 import com.pettpro.expenceche.presentation.colors.yellowBackgroundBrush
 
 @OptIn(ExperimentalMaterialApi::class, ExperimentalMaterial3Api::class)
@@ -67,7 +59,7 @@ fun DropDownMenu(
             }
         )
     }
-    viewModel.onEvent(AddExpenceIncomeFormEvent.SetTypeOfMoneyFlow(typeOfContentInDashBoardTab!!))
+    viewModel.onEvent(AddExpenceIncomeEvent.SetTypeOfMoneyFlow(typeOfContentInDashBoardTab!!))
 
     Box(
         modifier = Modifier
@@ -97,10 +89,10 @@ fun DropDownMenu(
                 ),
                 onValueChange = {
                     if (typeOfContentInDashBoardTab == TypeOfContentInDashBoardTab.Incomes) {
-                        viewModel.onEvent(AddExpenceIncomeFormEvent.CategoryIncomeChange(it))
+                        viewModel.onEvent(AddExpenceIncomeEvent.CategoryIncomeChange(it))
                     } else {
 
-                        viewModel.onEvent(AddExpenceIncomeFormEvent.CategoryExpenceChange(it))
+                        viewModel.onEvent(AddExpenceIncomeEvent.CategoryExpenceChange(it))
                     }
                 },
                 modifier = Modifier
@@ -137,7 +129,7 @@ fun DropDownMenu(
                                 },
                                 onClick = {
                                     viewModel.onEvent(
-                                        AddExpenceIncomeFormEvent.CategoryIncomeChange(
+                                        AddExpenceIncomeEvent.CategoryIncomeChange(
                                             item.toString()
                                         )
                                     )
@@ -156,7 +148,7 @@ fun DropDownMenu(
                                 },
                                 onClick = {
                                     viewModel.onEvent(
-                                        AddExpenceIncomeFormEvent.CategoryExpenceChange(
+                                        AddExpenceIncomeEvent.CategoryExpenceChange(
                                             item.toString()
                                         )
                                     )

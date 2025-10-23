@@ -36,7 +36,7 @@ import com.pettpro.expenceche.presentation.colors.YellowCustom
 import com.pettpro.expenceche.presentation.colors.blackGradient
 import com.pettpro.expenceche.presentation.colors.yellowBackgroundBrush
 import com.pettpro.expenceche.presentation.navigation.NavigationItem
-import com.pettpro.expenceche.presentation.registration.model.RegistrationFormEvent
+import com.pettpro.expenceche.presentation.registration.model.RegistrationEvent
 
 
 @Composable
@@ -54,8 +54,8 @@ fun RegisterScreen(
             viewModel.validationEvents.collect { event ->
                 when (event) {
                     is RegisterViewModel.ValidationEvent.Success -> {
-                        viewModel.onEvent(RegistrationFormEvent.AddUser)
-                        viewModel.onEvent(RegistrationFormEvent.ShowToast("Registration successful"))
+                        viewModel.onEvent(RegistrationEvent.AddUser)
+                        viewModel.onEvent(RegistrationEvent.ShowToast("Registration successful"))
                         navController?.navigate(NavigationItem.Login.route)
                     }
                 }
@@ -106,7 +106,7 @@ fun RegisterScreen(
                 },
                 textStyle = TextStyle.Default.copy(fontSize = 28.sp, textAlign = TextAlign.Start),
                 onValueChange = {
-                    viewModel.onEvent(RegistrationFormEvent.NameChange(it))
+                    viewModel.onEvent(RegistrationEvent.NameChange(it))
                 }, colors = TextFieldDefaults.textFieldColors(
                     cursorColor = Color.Black,
                     focusedIndicatorColor = Color.Transparent,
@@ -134,7 +134,7 @@ fun RegisterScreen(
                 },
                 textStyle = TextStyle.Default.copy(fontSize = 28.sp, textAlign = TextAlign.Start),
                 onValueChange = {
-                    viewModel.onEvent(RegistrationFormEvent.LoginChange(it))
+                    viewModel.onEvent(RegistrationEvent.LoginChange(it))
                 }, colors = TextFieldDefaults.textFieldColors(
                     cursorColor = Color.Black,
                     focusedIndicatorColor = Color.Transparent,
@@ -163,7 +163,7 @@ fun RegisterScreen(
                 },
                 textStyle = TextStyle.Default.copy(fontSize = 28.sp, textAlign = TextAlign.Start),
                 onValueChange = {
-                    viewModel.onEvent(RegistrationFormEvent.PasswordChange(it))
+                    viewModel.onEvent(RegistrationEvent.PasswordChange(it))
                 }, colors = TextFieldDefaults.textFieldColors(
                     cursorColor = Color.Black,
                     focusedIndicatorColor = Color.Transparent,
@@ -191,7 +191,7 @@ fun RegisterScreen(
                 },
                 textStyle = TextStyle.Default.copy(fontSize = 28.sp, textAlign = TextAlign.Start),
                 onValueChange = {
-                    viewModel.onEvent(RegistrationFormEvent.PasswordRepeatChange(it))
+                    viewModel.onEvent(RegistrationEvent.PasswordRepeatChange(it))
                 }, colors = TextFieldDefaults.textFieldColors(
                     cursorColor = Color.Black,
                     focusedIndicatorColor = Color.Transparent,
@@ -200,19 +200,19 @@ fun RegisterScreen(
             )
             RegisterButton {
                 if (state.nameError != null) {
-                    viewModel.onEvent(RegistrationFormEvent.ShowToast(state.nameError))
+                    viewModel.onEvent(RegistrationEvent.ShowToast(state.nameError))
                 }
                 if (state.loginError != null) {
-                    viewModel.onEvent(RegistrationFormEvent.ShowToast(state.loginError))
+                    viewModel.onEvent(RegistrationEvent.ShowToast(state.loginError))
                 }
                 if (state.passwordError != null) {
-                    viewModel.onEvent(RegistrationFormEvent.ShowToast(state.passwordError))
+                    viewModel.onEvent(RegistrationEvent.ShowToast(state.passwordError))
                 }
                 if (state.secondPasswordError != null) {
-                    viewModel.onEvent(RegistrationFormEvent.ShowToast(state.secondPasswordError))
+                    viewModel.onEvent(RegistrationEvent.ShowToast(state.secondPasswordError))
                 }
                 viewModel.onEvent(
-                    RegistrationFormEvent.Sumbit
+                    RegistrationEvent.Sumbit
                 )
             }
         }
@@ -243,13 +243,11 @@ private fun RegisterButton(function: () -> Unit) {
             textAlign = TextAlign.Center,
             color = Color.DarkGray
         )
-
     )
 }
 
 @Composable
 private fun LowerRow(navController: NavHostController?) {
-
     Row(
         horizontalArrangement = Arrangement.Center,
         modifier = Modifier

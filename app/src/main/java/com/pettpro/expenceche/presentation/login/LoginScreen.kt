@@ -38,7 +38,7 @@ import androidx.navigation.NavHostController
 import com.pettpro.expenceche.presentation.colors.YellowCustom
 import com.pettpro.expenceche.presentation.colors.blackGradient
 import com.pettpro.expenceche.presentation.colors.yellowBackgroundBrush
-import com.pettpro.expenceche.presentation.login.model.LoginFormEvent
+import com.pettpro.expenceche.presentation.login.model.LoginEvent
 import com.pettpro.expenceche.presentation.navigation.NavigationItem
 
 @Composable
@@ -62,7 +62,7 @@ fun LoginScreen(navController: NavHostController?, viewModel: LoginViewModel = h
                     is LoginViewModel.ValidationEvent.Success -> {
                         viewModel.saveUserToDb()
                         viewModel.updateUserInDb()
-                        viewModel.onEvent(LoginFormEvent.ShowToast("Login successful"))
+                        viewModel.onEvent(LoginEvent.ShowToast("Login successful"))
                         navController?.navigate(NavigationItem.Home.route)
                     }
                 }
@@ -113,7 +113,7 @@ fun LoginScreen(navController: NavHostController?, viewModel: LoginViewModel = h
                     )
                 },
                 onValueChange = {
-                    viewModel.onEvent(LoginFormEvent.LoginChange(it))
+                    viewModel.onEvent(LoginEvent.LoginChange(it))
                 }, colors = TextFieldDefaults.textFieldColors(
                     cursorColor = Color.Black,
                     focusedIndicatorColor = Transparent,
@@ -142,7 +142,7 @@ fun LoginScreen(navController: NavHostController?, viewModel: LoginViewModel = h
                 },
                 textStyle = TextStyle.Default.copy(fontSize = 28.sp, textAlign = TextAlign.Start),
                 onValueChange = {
-                    viewModel.onEvent(LoginFormEvent.PasswordChange(it))
+                    viewModel.onEvent(LoginEvent.PasswordChange(it))
                 }, colors = TextFieldDefaults.textFieldColors(
                     cursorColor = Color.Black,
                     focusedIndicatorColor = Transparent,
@@ -153,13 +153,13 @@ fun LoginScreen(navController: NavHostController?, viewModel: LoginViewModel = h
             LoginButton(context) {
 
                 if (state.loginError != null) {
-                    viewModel.onEvent(LoginFormEvent.ShowToast(state.loginError))
+                    viewModel.onEvent(LoginEvent.ShowToast(state.loginError))
                 }
                 if (state.passwordError != null) {
-                    viewModel.onEvent(LoginFormEvent.ShowToast(state.passwordError))
+                    viewModel.onEvent(LoginEvent.ShowToast(state.passwordError))
                 }
                 viewModel.onEvent(
-                    LoginFormEvent.Sumbit
+                    LoginEvent.Sumbit
                 )
             }
         }

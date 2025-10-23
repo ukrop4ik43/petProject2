@@ -1,6 +1,5 @@
 package com.pettpro.expenceche.presentation.welcome
 
-import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.Image
@@ -27,17 +26,17 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.HorizontalPagerIndicator
 import com.google.accompanist.pager.PagerState
 import com.google.accompanist.pager.rememberPagerState
-import com.pettpro.domain.db.model.User
 import com.pettpro.expenceche.presentation.colors.YellowCustom
 import com.pettpro.expenceche.presentation.colors.blackGradient
 import com.pettpro.expenceche.presentation.navigation.NavigationItem
+import com.pettpro.expenceche.presentation.welcome.model.OnBoardingPage
+import com.pettpro.expenceche.presentation.welcome.model.welcomeScreenPages
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -52,7 +51,7 @@ fun WelcomeScreen(
 ) {
     LaunchedEffect(Unit) {
         launch(Dispatchers.IO) {
-            if (splashViewModel.getUser().login != "") {
+            if (splashViewModel.getUser().login.isNotEmpty()) {
                 withContext(Dispatchers.Main){
                     navController.popBackStack()
                     navController.navigate(NavigationItem.Home.route)
@@ -67,12 +66,7 @@ fun WelcomeScreen(
         }
 
     }
-    val pages = listOf(
-        OnBoardingPage.First,
-        OnBoardingPage.Second,
-        OnBoardingPage.Third,
-        OnBoardingPage.Fourth
-    )
+
 
     val pagerState = rememberPagerState()
 
@@ -91,7 +85,7 @@ fun WelcomeScreen(
                 state = pagerState,
                 verticalAlignment = Alignment.Top
             ) { position ->
-                PagerScreen(onBoardingPage = pages[position])
+                PagerScreen(onBoardingPage = welcomeScreenPages[position])
             }
             HorizontalPagerIndicator(
                 modifier = Modifier

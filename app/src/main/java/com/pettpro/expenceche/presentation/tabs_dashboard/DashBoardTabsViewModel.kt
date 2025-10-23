@@ -26,7 +26,6 @@ class DashBoardTabsViewModel @Inject constructor(
     private val userDatabaseUseCases: UserDatabaseUseCases,
     private val homeScreenStateProvider: HomeScreenProvider,
     private val chartDataExtractor: ChartDataExtractor,
-    private val getAllUsersRepository: FirebaseUsersRegistrationRepository,
 ) : ViewModel() {
     private val _screenState = MutableStateFlow<HomeScreenState>(HomeScreenState.Starting)
     val screenState: StateFlow<HomeScreenState> = _screenState.asStateFlow()

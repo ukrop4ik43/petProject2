@@ -21,12 +21,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.pettpro.domain.db.model.CategoryOfExpence
-import com.pettpro.domain.db.model.CategoryOfIncome
+import com.pettpro.expenceche.presentation.models.CategoryOfIncome
 import com.pettpro.domain.db.model.Income
 import com.pettpro.expenceche.presentation.colors.DarkGrey200
 import com.pettpro.expenceche.presentation.colors.colorsOfCategories
-import java.time.LocalDate
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -34,7 +32,6 @@ fun ViewOfIncome(income: Income, viewModel: ViewExpenceIncomeViewModel = hiltVie
     val dateOfAdding = income.date
     val amount = income.amount
     val category = viewModel.getCategoryOfIncome(income)
-    val colorOfTheCategory = colorOfCategoryIncome(category)
     Spacer(
         modifier = Modifier
             .height(5.dp)
@@ -45,8 +42,7 @@ fun ViewOfIncome(income: Income, viewModel: ViewExpenceIncomeViewModel = hiltVie
             .padding(start = 10.dp, end = 70.dp)
             .fillMaxWidth()
             .background(
-                color = DarkGrey200,
-                shape = RoundedCornerShape(10.dp)
+                color = DarkGrey200, shape = RoundedCornerShape(10.dp)
             )
             .height(100.dp), contentAlignment = Alignment.CenterStart
     ) {
@@ -55,11 +51,9 @@ fun ViewOfIncome(income: Income, viewModel: ViewExpenceIncomeViewModel = hiltVie
                 modifier = Modifier
                     .padding(start = 10.dp)
                     .background(
-                        color = colorOfTheCategory,
-                        shape = RoundedCornerShape(10.dp)
+                        color = category.color, shape = RoundedCornerShape(10.dp)
                     )
                     .size(30.dp)
-
             )
             Column {
                 Text(
@@ -88,23 +82,6 @@ fun ViewOfIncome(income: Income, viewModel: ViewExpenceIncomeViewModel = hiltVie
                 )
             }
         }
-
     }
 }
 
-@Composable
-private fun colorOfCategoryIncome(category: CategoryOfIncome) = when (category) {
-    CategoryOfIncome.P2P -> {
-        colorsOfCategories[0]
-    }
-    CategoryOfIncome.Replenishment -> {
-        colorsOfCategories[1]
-    }
-    CategoryOfIncome.Other -> {
-        colorsOfCategories[2]
-    }
-
-    else -> {
-        colorsOfCategories[2]
-    }
-}

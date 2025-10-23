@@ -35,7 +35,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.pettpro.domain.home.TypeOfContentInDashBoardTab
 import com.pettpro.expenceche.R
-import com.pettpro.expenceche.presentation.add_expence_income.model.AddExpenceIncomeFormEvent
+import com.pettpro.expenceche.presentation.add_expence_income.model.AddExpenceIncomeEvent
 import com.pettpro.expenceche.presentation.colors.DarkGrey200
 import com.pettpro.expenceche.presentation.colors.YellowCustomSecond
 import com.pettpro.expenceche.presentation.colors.blackGradient200
@@ -57,8 +57,8 @@ fun AddExpenceIncomeScreen(
         viewModel.validationEvents.collect { event ->
             when (event) {
                 is AddexpenceViewModel.ValidationEvent.Success -> {
-                    viewModel.onEvent(AddExpenceIncomeFormEvent.Final)
-                    viewModel.onEvent(AddExpenceIncomeFormEvent.ShowToast("Successfully Added"))
+                    viewModel.onEvent(AddExpenceIncomeEvent.Final)
+                    viewModel.onEvent(AddExpenceIncomeEvent.ShowToast("Successfully Added"))
                     navController?.navigate(NavigationItem.Home.route)
                 }
             }
@@ -119,7 +119,7 @@ fun AddExpenceIncomeScreen(
             keyboardActions = KeyboardActions(
                 onDone = {
                     viewModel.onEvent(
-                        AddExpenceIncomeFormEvent.Submit
+                        AddExpenceIncomeEvent.Submit
                     )
                 }
             ),
@@ -134,7 +134,7 @@ fun AddExpenceIncomeScreen(
             },
             textStyle = TextStyle.Default.copy(fontSize = 28.sp, textAlign = TextAlign.Start),
             onValueChange = {
-                viewModel.onEvent(AddExpenceIncomeFormEvent.AmountChange(it))
+                viewModel.onEvent(AddExpenceIncomeEvent.AmountChange(it))
             }, colors = TextFieldDefaults.textFieldColors(
                 cursorColor = Color.Black,
                 focusedIndicatorColor = Color.Transparent,
@@ -147,10 +147,10 @@ fun AddExpenceIncomeScreen(
         ) {
             SubmitButton {
                 if (state.amountError != null) {
-                    viewModel.onEvent(AddExpenceIncomeFormEvent.ShowToast(state.amountError))
+                    viewModel.onEvent(AddExpenceIncomeEvent.ShowToast(state.amountError))
                 }
                 viewModel.onEvent(
-                    AddExpenceIncomeFormEvent.Submit
+                    AddExpenceIncomeEvent.Submit
                 )
             }
         }

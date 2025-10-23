@@ -1,6 +1,5 @@
 package com.pettpro.expenceche.presentation.add_expence_income
 
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -16,8 +15,8 @@ import com.pettpro.domain.home.TypeOfContentInDashBoardTab
 import com.pettpro.domain.registration.FirebaseUsersRegistrationRepository
 import com.pettpro.domain.registration.ToastControl
 import com.pettpro.domain.usecases.userdb.UserDatabaseUseCases
-import com.pettpro.expenceche.presentation.add_expence_income.model.AddExpenceDataState
-import com.pettpro.expenceche.presentation.add_expence_income.model.AddExpenceIncomeFormEvent
+import com.pettpro.expenceche.presentation.add_expence_income.model.AddExpenceState
+import com.pettpro.expenceche.presentation.add_expence_income.model.AddExpenceIncomeEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
@@ -37,39 +36,37 @@ class AddexpenceViewModel @Inject constructor(
     private val actualTimeRepository: ActualTimeRepository,
 ) : ViewModel() {
     private var isItIncome = false
-    var state by mutableStateOf(AddExpenceDataState())
-    var user by mutableStateOf(User())
+    var state by mutableStateOf(AddExpenceState())
 
     private val validationEventChannel = Channel<ValidationEvent>()
     val validationEvents = validationEventChannel.receiveAsFlow()
 
 
-
     //its necessary to call this block code in custom function,not in init{}
     suspend fun initViewModel() {
-        withContext(Dispatchers.Default) {
-            user = userDatabaseUseCases.getUser()
+        withContext(Dispatchers.IO) {
+            state = state.copy(user = userDatabaseUseCases.getUser())
         }
     }
 
-    fun onEvent(event: AddExpenceIncomeFormEvent) {
+    fun onEvent(event: AddExpenceIncomeEvent) {
         when (event) {
-            is AddExpenceIncomeFormEvent.AmountChange -> {
+            is AddExpenceIncomeEvent.AmountChange -> {
                 state = state.copy(amount = event.amount)
             }
 
-            is AddExpenceIncomeFormEvent.CategoryExpenceChange -> {
+            is AddExpenceIncomeEvent.CategoryExpenceChange -> {
                 state =
                     state.copy(categoryOfExpence = categoriesMapper.setExpenceCaterogy(event.category))
             }
 
-            is AddExpenceIncomeFormEvent.CategoryIncomeChange -> {
+            is AddExpenceIncomeEvent.CategoryIncomeChange -> {
 
                 state =
                     state.copy(categoryOfIncome = categoriesMapper.setIncomeCaterogy(event.category))
             }
 
-            is AddExpenceIncomeFormEvent.SetTypeOfMoneyFlow -> {
+            is AddExpenceIncomeEvent.SetTypeOfMoneyFlow -> {
                 if (event.type == TypeOfContentInDashBoardTab.Incomes) {
                     isItIncome = true
                 } else {
@@ -77,15 +74,15 @@ class AddexpenceViewModel @Inject constructor(
                 }
             }
 
-            is AddExpenceIncomeFormEvent.ShowToast -> {
+            is AddExpenceIncomeEvent.ShowToast -> {
                 toastControl.show(event.text)
             }
 
-            is AddExpenceIncomeFormEvent.Submit -> {
+            is AddExpenceIncomeEvent.Submit -> {
                 submitData()
             }
 
-            is AddExpenceIncomeFormEvent.Final -> {
+            is AddExpenceIncomeEvent.Final -> {
                 finalOfSaving()
             }
 
@@ -93,25 +90,30 @@ class AddexpenceViewModel @Inject constructor(
     }
 
     private fun addIncome() {
-        user.arrayOfIncomes.add(
+        val newUser = state.user
+        newUser.arrayOfIncomes.add(
             Income(
-                (user.arrayOfIncomes.size).toString(),
+                (state.user.arrayOfIncomes.size).toString(),
                 actualTimeRepository.getActualTime(),
                 state.amount.toDouble(),
                 state.categoryOfIncome!!.toString()
             )
         )
+
+        state = state.copy(user = newUser)
     }
 
     private fun addExpence() {
-        user.arrayOfExpence.add(
+        val newUser = state.user
+        newUser.arrayOfExpence.add(
             Expence(
-                (user.arrayOfExpence.size).toString(),
+                (state.user.arrayOfExpence.size).toString(),
                 actualTimeRepository.getActualTime(),
                 state.amount.toDouble(),
                 state.categoryOfExpence!!.toString()
             )
         )
+        state = state.copy(user = newUser)
     }
 
     private fun submitData() {
@@ -131,8 +133,8 @@ class AddexpenceViewModel @Inject constructor(
             } else {
                 addExpence()
             }
-            userDatabaseUseCases.updateUser(user)
-            firebaseUsersRegistrationRepository.updateUser(user)
+            userDatabaseUseCases.updateUser(state.user)
+            firebaseUsersRegistrationRepository.updateUser(state.user)
         }
 
         viewModelScope.launch {

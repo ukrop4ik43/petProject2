@@ -21,11 +21,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.pettpro.domain.db.model.CategoryOfExpence
+import com.pettpro.expenceche.presentation.models.CategoryOfExpence
 import com.pettpro.domain.db.model.Expence
 import com.pettpro.expenceche.presentation.colors.DarkGrey200
 import com.pettpro.expenceche.presentation.colors.colorsOfCategories
-import java.time.LocalDate
 
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -34,7 +33,6 @@ fun ViewOfExpence(expence: Expence, viewModel: ViewExpenceIncomeViewModel = hilt
     val date = expence.date
     val amount = expence.amount
     val category = viewModel.getCategoryOfExpence(expence)
-    val colorOfTheCategory = colorOfCategoryExpence(category)
     Spacer(
         modifier = Modifier
             .height(5.dp)
@@ -55,7 +53,7 @@ fun ViewOfExpence(expence: Expence, viewModel: ViewExpenceIncomeViewModel = hilt
                 modifier = Modifier
                     .padding(start = 10.dp)
                     .background(
-                        color = colorOfTheCategory,
+                        color = category.color,
                         shape = RoundedCornerShape(10.dp)
                     )
                     .size(30.dp)
@@ -92,34 +90,5 @@ fun ViewOfExpence(expence: Expence, viewModel: ViewExpenceIncomeViewModel = hilt
     }
 }
 
-@Composable
-private fun colorOfCategoryExpence(category: CategoryOfExpence) = when (category) {
-    CategoryOfExpence.Grocery -> {
-        colorsOfCategories[0]
-    }
 
-    CategoryOfExpence.Electronic -> {
-        colorsOfCategories[1]
-    }
-
-    CategoryOfExpence.Healthcare -> {
-        colorsOfCategories[2]
-    }
-
-    CategoryOfExpence.Transport -> {
-        colorsOfCategories[3]
-    }
-
-    CategoryOfExpence.Restaurants -> {
-        colorsOfCategories[4]
-    }
-
-    CategoryOfExpence.Entertainment -> {
-        colorsOfCategories[5]
-    }
-
-    else -> {
-        colorsOfCategories[6]
-    }
-}
 

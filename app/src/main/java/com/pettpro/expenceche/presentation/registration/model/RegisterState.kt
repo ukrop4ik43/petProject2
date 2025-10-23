@@ -1,6 +1,6 @@
 package com.pettpro.expenceche.presentation.registration.model
 
-data class RegisterDataState(
+data class RegisterState(
     val login:String="",
     val loginError:String? =null,
     val password:String="",

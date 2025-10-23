@@ -1,6 +1,5 @@
 package com.pettpro.expenceche.presentation.tabs_dashboard
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -15,19 +14,21 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.pettpro.domain.home.TypeOfContentInDashBoardTab
-import com.pettpro.expenceche.presentation.colors.DarkGrey200
 
 @Composable
-fun NoInfoScreen(typeOfContent: TypeOfContentInDashBoardTab,onClick: () -> Unit) {
+fun NoInfoScreen(typeOfContent: TypeOfContentInDashBoardTab, onClick: () -> Unit) {
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.TopCenter) {
         Text(
             modifier = Modifier
                 .padding(top = 1.dp)
                 .align(Alignment.Center),
-            text = if (typeOfContent == TypeOfContentInDashBoardTab.Incomes) {
-                "There are no incomes yet..."
-            } else {
-                "There are no expences yet..."
+            text = when (typeOfContent) {
+                TypeOfContentInDashBoardTab.Incomes -> {
+                    "There are no incomes yet..."
+                }
+                TypeOfContentInDashBoardTab.Expences -> {
+                    "There are no expences yet..."
+                }
             },
             fontSize = 20.sp,
             fontWeight = FontWeight.Medium,
@@ -39,7 +40,7 @@ fun NoInfoScreen(typeOfContent: TypeOfContentInDashBoardTab,onClick: () -> Unit)
                 .size(70.dp)
                 .align(Alignment.BottomEnd)
                 .padding(12.dp)
-        ){
+        ) {
             onClick()
         }
     }
