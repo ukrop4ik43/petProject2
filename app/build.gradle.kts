@@ -71,30 +71,30 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
-    implementation ("androidx.navigation:navigation-compose:2.7.7")
-    implementation ("com.google.dagger:hilt-android:2.50")
-    kapt ("com.google.dagger:hilt-android-compiler:2.50")
-    implementation ("androidx.core:core-splashscreen:1.0.0-beta01")
-    implementation("androidx.compose.material3:material3:1.3.0-alpha04")
+    implementation (libs.androidx.navigation.compose)
+    implementation (libs.hilt.android)
+    kapt (libs.hilt.android.compiler)
+    implementation (libs.androidx.core.splashscreen)
+    implementation(libs.androidx.compose.material3)
     // Navigation Compose
-    implementation ("androidx.compose.material:material:1.0.5")
-    implementation ("androidx.compose.runtime:runtime-livedata:1.0.5")
-    implementation ("com.google.accompanist:accompanist-pager:0.20.3")
+    implementation (libs.androidx.compose.material)
+    implementation (libs.androidx.compose.runtime.livedata)
+    implementation (libs.accompanist.pager)
     // Pager and Indicators - Accompanist
-    implementation ("com.google.accompanist:accompanist-pager:0.24.2-alpha")
-    implementation ("com.google.accompanist:accompanist-pager-indicators:0.24.2-alpha")
+    implementation (libs.accompanist.pager.v0242alpha)
+    implementation (libs.accompanist.pager.indicators)
 
-    implementation( "androidx.hilt:hilt-navigation-compose:1.0.0-alpha02")
-    implementation ("androidx.room:room-runtime:2.6.1")
-    kapt ("androidx.room:room-compiler:2.6.1")
+    implementation( libs.androidx.hilt.navigation.compose)
+    implementation (libs.androidx.room.runtime)
+    kapt (libs.androidx.room.compiler)
 
     // Optional: For Kotlin coroutine support
-    implementation ("androidx.room:room-ktx:2.6.1")
+    implementation (libs.androidx.room.ktx)
 
-    implementation ("com.google.code.gson:gson:2.8.8")
+    implementation (libs.gson)
 
-    implementation(platform("com.google.firebase:firebase-bom:32.5.0"))
-    implementation("com.google.firebase:firebase-database")
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.com.google.firebase.firebase.database)
 
 
 }
