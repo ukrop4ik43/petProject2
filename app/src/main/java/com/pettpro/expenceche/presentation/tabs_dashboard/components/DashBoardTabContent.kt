@@ -1,7 +1,6 @@
-package com.pettpro.expenceche.presentation.tabs_dashboard
+package com.pettpro.expenceche.presentation.tabs_dashboard.components
 
 import android.os.Build
-import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -11,6 +10,9 @@ import androidx.navigation.NavHostController
 import com.pettpro.domain.home.HomeScreenState
 import com.pettpro.domain.home.TypeOfContentInDashBoardTab
 import com.pettpro.expenceche.presentation.navigation.NavigationItem
+import com.pettpro.expenceche.presentation.tabs_dashboard.DashBoardTabsViewModel
+import com.pettpro.expenceche.presentation.tabs_dashboard.InfoScreen
+import com.pettpro.expenceche.presentation.tabs_dashboard.NoInfoScreen
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable

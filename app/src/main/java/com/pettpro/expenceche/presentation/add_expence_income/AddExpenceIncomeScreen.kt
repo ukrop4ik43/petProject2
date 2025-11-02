@@ -35,6 +35,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.pettpro.domain.home.TypeOfContentInDashBoardTab
 import com.pettpro.expenceche.R
+import com.pettpro.expenceche.presentation.add_expence_income.components.DropDownMenu
+import com.pettpro.expenceche.presentation.add_expence_income.components.SubmitButton
 import com.pettpro.expenceche.presentation.add_expence_income.model.AddExpenceIncomeEvent
 import com.pettpro.expenceche.presentation.colors.DarkGrey200
 import com.pettpro.expenceche.presentation.colors.YellowCustomSecond

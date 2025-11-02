@@ -1,4 +1,4 @@
-package com.pettpro.expenceche.presentation.tabs_dashboard
+package com.pettpro.expenceche.presentation.tabs_dashboard.components
 
 import android.os.Build
 import androidx.annotation.RequiresApi
@@ -25,10 +25,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.pettpro.domain.home.HomeScreenState
 import com.pettpro.domain.home.TypeOfContentInDashBoardTab
 import com.pettpro.expenceche.presentation.colors.YellowCustom
 import com.pettpro.expenceche.presentation.colors.blackGradient200
+import com.pettpro.expenceche.presentation.tabs_dashboard.DashBoardTabsViewModel
 import kotlinx.coroutines.launch
 
 @RequiresApi(Build.VERSION_CODES.O)

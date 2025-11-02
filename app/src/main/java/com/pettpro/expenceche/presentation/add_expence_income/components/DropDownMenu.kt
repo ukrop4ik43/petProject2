@@ -1,4 +1,4 @@
-package com.pettpro.expenceche.presentation.add_expence_income
+package com.pettpro.expenceche.presentation.add_expence_income.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -38,6 +38,7 @@ import androidx.compose.ui.unit.toSize
 import com.pettpro.domain.add_expence_income.model.categoryOfExpence
 import com.pettpro.domain.add_expence_income.model.categoryOfIncome
 import com.pettpro.domain.home.TypeOfContentInDashBoardTab
+import com.pettpro.expenceche.presentation.add_expence_income.AddexpenceViewModel
 import com.pettpro.expenceche.presentation.add_expence_income.model.AddExpenceIncomeEvent
 import com.pettpro.expenceche.presentation.colors.YellowCustom
 import com.pettpro.expenceche.presentation.colors.yellowBackgroundBrush

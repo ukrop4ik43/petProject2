@@ -18,8 +18,10 @@ import androidx.compose.ui.unit.dp
 import com.pettpro.domain.db.model.Expence
 import com.pettpro.domain.db.model.Income
 import com.pettpro.domain.home.TypeOfContentInDashBoardTab
-import com.pettpro.expenceche.presentation.home.custom_view.ViewOfExpence
-import com.pettpro.expenceche.presentation.home.custom_view.ViewOfIncome
+import com.pettpro.expenceche.presentation.home.components.ViewOfExpence
+import com.pettpro.expenceche.presentation.home.components.ViewOfIncome
+import com.pettpro.expenceche.presentation.tabs_dashboard.components.ExpenceOrIncomeButton
+import com.pettpro.expenceche.presentation.tabs_dashboard.components.PieChart
 
 
 @RequiresApi(Build.VERSION_CODES.O)
