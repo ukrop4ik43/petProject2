@@ -1,4 +1,4 @@
-package com.pettpro.expenceche.presentation.add_expence_income
+package com.pettpro.expenceche.presentation.add_expence_income.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable

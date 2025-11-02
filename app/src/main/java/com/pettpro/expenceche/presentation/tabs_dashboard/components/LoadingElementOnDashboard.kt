@@ -1,4 +1,4 @@
-package com.pettpro.expenceche.presentation.tabs_dashboard
+package com.pettpro.expenceche.presentation.tabs_dashboard.components
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -9,7 +9,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.pettpro.domain.home.TypeOfContentInDashBoardTab
 import com.pettpro.expenceche.presentation.colors.DarkGrey200
 
 

@@ -1,4 +1,4 @@
-package com.pettpro.expenceche.presentation.home.custom_view
+package com.pettpro.expenceche.presentation.home.components
 
 import androidx.lifecycle.ViewModel
 import com.pettpro.domain.add_expence_income.model.CategoryOfExpence

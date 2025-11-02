@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.pettpro.expenceche.presentation.colors.yellowBackgroundBrush
-import com.pettpro.expenceche.presentation.tabs_dashboard.TabForHome
+import com.pettpro.expenceche.presentation.tabs_dashboard.components.TabForHome
 
 
 @RequiresApi(Build.VERSION_CODES.O)

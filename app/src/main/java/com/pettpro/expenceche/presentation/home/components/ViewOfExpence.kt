@@ -1,4 +1,4 @@
-package com.pettpro.expenceche.presentation.home.custom_view
+package com.pettpro.expenceche.presentation.home.components
 
 import android.os.Build
 import androidx.annotation.RequiresApi
@@ -21,16 +21,17 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.pettpro.domain.db.model.Income
+import com.pettpro.domain.db.model.Expence
 import com.pettpro.expenceche.presentation.colors.DarkGrey200
 import com.pettpro.expenceche.presentation.util.toColor
 
+
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun ViewOfIncome(income: Income, viewModel: ViewExpenceIncomeViewModel = hiltViewModel()) {
-    val dateOfAdding = income.date
-    val amount = income.amount
-    val category = viewModel.getCategoryOfIncome(income)
+fun ViewOfExpence(expence: Expence, viewModel: ViewExpenceIncomeViewModel = hiltViewModel()) {
+    val date = expence.date
+    val amount = expence.amount
+    val category = viewModel.getCategoryOfExpence(expence)
     Spacer(
         modifier = Modifier
             .height(5.dp)
@@ -41,7 +42,8 @@ fun ViewOfIncome(income: Income, viewModel: ViewExpenceIncomeViewModel = hiltVie
             .padding(start = 10.dp, end = 70.dp)
             .fillMaxWidth()
             .background(
-                color = DarkGrey200, shape = RoundedCornerShape(10.dp)
+                color = DarkGrey200,
+                shape = RoundedCornerShape(10.dp)
             )
             .height(100.dp), contentAlignment = Alignment.CenterStart
     ) {
@@ -50,9 +52,11 @@ fun ViewOfIncome(income: Income, viewModel: ViewExpenceIncomeViewModel = hiltVie
                 modifier = Modifier
                     .padding(start = 10.dp)
                     .background(
-                        color = category.toColor(), shape = RoundedCornerShape(10.dp)
+                        color = category.toColor(),
+                        shape = RoundedCornerShape(10.dp)
                     )
                     .size(30.dp)
+
             )
             Column {
                 Text(
@@ -65,7 +69,7 @@ fun ViewOfIncome(income: Income, viewModel: ViewExpenceIncomeViewModel = hiltVie
                 Spacer(modifier = Modifier.height(10.dp))
                 Text(
                     modifier = Modifier.padding(start = 18.dp),
-                    text = dateOfAdding,
+                    text = date,
                     fontWeight = FontWeight.Medium,
                     fontSize = 15.sp,
                     color = Color.LightGray
@@ -83,4 +87,6 @@ fun ViewOfIncome(income: Income, viewModel: ViewExpenceIncomeViewModel = hiltVie
         }
     }
 }
+
+
 
