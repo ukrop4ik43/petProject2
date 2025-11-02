@@ -66,11 +66,7 @@ class AddexpenceViewModel @Inject constructor(
             }
 
             is AddExpenceIncomeEvent.SetTypeOfMoneyFlow -> {
-                if (event.type == TypeOfContentInDashBoardTab.Incomes) {
-                    isItIncome = true
-                } else {
-                    isItIncome = false
-                }
+                isItIncome = event.type == TypeOfContentInDashBoardTab.Incomes
             }
 
             is AddExpenceIncomeEvent.ShowToast -> {
