@@ -77,9 +77,7 @@ class AddexpenceViewModel @Inject constructor(
                 submitData()
             }
 
-            is AddExpenceIncomeEvent.Final -> {
-                finalOfSaving()
-            }
+
 
         }
     }
@@ -137,9 +135,7 @@ class AddexpenceViewModel @Inject constructor(
         }
     }
 
-    private fun finalOfSaving() {
 
-    }
 
 
     sealed class ValidationEvent {

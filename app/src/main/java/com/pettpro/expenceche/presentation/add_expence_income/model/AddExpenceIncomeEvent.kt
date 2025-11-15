@@ -9,6 +9,4 @@ sealed class AddExpenceIncomeEvent {
     data class CategoryIncomeChange(val category: String) : AddExpenceIncomeEvent()
     data class ShowToast(val text: String) : AddExpenceIncomeEvent()
     data object Submit : AddExpenceIncomeEvent()
-    data object Final : AddExpenceIncomeEvent()
-
 }
