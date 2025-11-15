@@ -8,7 +8,7 @@ import javax.inject.Inject
 class RegistrationVerifyingRepositoryImpl @Inject constructor() : RegistrationVerifyingRepository {
     override fun checkLogin(
         login: String,
-        users: MutableList<User>
+        users: List<User>
     ): RegistrationValidationResults {
         if (loginExists(login, users)) {
             return RegistrationValidationResults(
@@ -25,7 +25,7 @@ class RegistrationVerifyingRepositoryImpl @Inject constructor() : RegistrationVe
         return RegistrationValidationResults(true)
     }
 
-    private fun loginExists(login: String, users: MutableList<User>): Boolean {
+    private fun loginExists(login: String, users: List<User>): Boolean {
         for (userData in users) {
             if (userData.login == login) {
                 return true
