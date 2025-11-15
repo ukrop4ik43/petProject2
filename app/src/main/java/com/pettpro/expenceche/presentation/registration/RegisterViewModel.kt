@@ -24,16 +24,14 @@ class RegisterViewModel @Inject constructor(
     private val toastControl: ToastControl,
     private val firebaseUsersRepository: FirebaseUsersRegistrationRepository
 ) : ViewModel() {
-    @SuppressLint("MutableCollectionMutableState")
-    var userList: MutableList<User> = mutableListOf()
-
     var state by mutableStateOf(RegisterState())
     private val validationEventChannel = Channel<ValidationEvent>()
     val validationEvents = validationEventChannel.receiveAsFlow()
 
     init {
         viewModelScope.launch {
-            userList = firebaseUsersRepository.getResponseFromRealtimeDatabaseUsingCoroutines()
+            val newList=firebaseUsersRepository.getResponseFromRealtimeDatabaseUsingCoroutines()
+            state=state.copy( userList = newList)
         }
     }
 
@@ -76,7 +74,7 @@ class RegisterViewModel @Inject constructor(
 
     private fun submitData() {
         val nameResult = registrationVerifyingRepository.checkName(state.name)
-        val loginResult = registrationVerifyingRepository.checkLogin(state.login, userList)
+        val loginResult = registrationVerifyingRepository.checkLogin(state.login, state.userList)
         val passwordResult = registrationVerifyingRepository.checkPassword(state.password)
         val repeatedPasswordResult = registrationVerifyingRepository.checkRepeatedPassword(
             state.password,
